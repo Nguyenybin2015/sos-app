@@ -8,32 +8,48 @@ const jwt = require('jsonwebtoken');
 const twoFactor = require('./twoFactor.js');
 const Speakeasy = require("speakeasy");
 
-// two factor
-router.post("/totp-secret", (req, res, next) => {
-    var secret = Speakeasy.generateSecret({ length: 20 });
-    res.send({ "secret": secret.base32 });
-});
-router.post("/totp-generate", (req, res, next) => {
-    res.send({
-        "token": Speakeasy.totp({
-            secret: req.body.secret,
-            encoding: "base32"
-        }),
-        "remaining": (30 - Math.floor((new Date()).getTime() / 1000.0 % 30)) // time 30 seconds
-    });
-});
+// const qrcode = require('qrcode');
+// var secret = Speakeasy.generateSecret({ name: "bin" });
+// console.log(secret);
+// var verify = Speakeasy.totp.verify({
+//     secret: 'HBDWIYSQMNFWEMRVKV4SIQLRPNHFILZZHFNTE43WFAWH2XJQEVQQ',
+//     encoding: "base32",
+//     token: "488862"
+// });
+// console.log(verify);
+// router.post('/verify', (req, res) => {
+//     res.send({
+//         "valid": Speakeasy.totp.verify({
+//             secret: 'GASVAQJRLVOW6R2KJRGTAVRWI5NF2NROHJQXOVSAPVEW4I2TGJUQ',
+//             encoding: "base32",
+//             token: req.body.token,
+//         })
+//     });
+// });
+// router.post("/totp-secret", (req, res, next) => {
+//     var secret = Speakeasy.generateSecret({ length: 20 });
+//     res.send({ "secret": secret.base32 });
+// });
+// router.post("/totp-generate", (req, res, next) => {
+//     res.send({
+//         "token": Speakeasy.totp({
+//             secret: req.body.secret,
+//             encoding: "base32"
+//         }),
+//         "remaining": (30 - Math.floor((new Date()).getTime() / 1000.0 % 30)) // time 30 seconds
+//     });
+// });
+// router.post("/totp-validate", (req, res, next) => {
+//     res.send({
+//         "valid": Speakeasy.totp.verify({
+//             secret: req.body.secret,
+//             encoding: "base32",
+//             token: req.body.token,
+//             window: 0
+//         })
+//     });
+// });
 
-
-router.post("/totp-validate", (req, res, next) => {
-    res.send({
-        "valid": Speakeasy.totp.verify({
-            secret: req.body.secret,
-            encoding: "base32",
-            token: req.body.token,
-            window: 1
-        })
-    });
-});
 
 router.post('/register', signupValidation, (req, res, next) => {
     db.query(
@@ -108,15 +124,33 @@ router.post('/login', loginValidation, (req, res, next) => {
                             });
                         }
                         if (bResult) {
-                            const token = jwt.sign({ id: result[0].id }, 'the-super-strong-secrect', { expiresIn: '1h' });
+                            var secret = Speakeasy.generateSecret({ name: result[0].name });
+                            console.log(secret);
+                            var verify = Speakeasy.totp.verify({
+                                secret: 'NNRDAXTHPF3W623QMV2FKYZQLVASUSKCEFMCKZSRM5ITMYZOG4XA',
+                                encoding: "base32",
+                                token: "194758"
+                            });
+                            console.log(verify);
+                            // return res.status(200).send({
+                            //     msg: 'Logged in!',
+                            //     user: result[0]
+                            // });
+                            // const token = jwt.sign({ id: result[0].id }, 'the-super-strong-secrect', { expiresIn: '1h' });
                             // db.query(
                             //     `UPDATE users SET last_login = now() WHERE id = '${result[0].id}'`
                             // );
-                            return res.status(200).send({
-                                msg: 'Logged in!',
-                                token,
-                                user: result[0]
-                            });
+                            if (verify) {
+                                return res.status(200).send({
+                                    msg: 'Logged in!',
+                                    user: result[0]
+                                });
+                            }
+                            else{
+                                return res.status(401).send({
+                                    msg: 'Please include a valid OTP'
+                                })
+                            }
                         }
                         return res.status(401).send({
                             msg: 'Username or password is incorrect!'
@@ -136,7 +170,7 @@ router.post('/login', loginValidation, (req, res, next) => {
 
 // router.get('/logout', (req, res) => {
 //     if (condition) {
-        
+
 //     }
 // });
 module.exports = router;
