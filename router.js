@@ -124,12 +124,22 @@ router.post('/login', loginValidation, (req, res, next) => {
                             });
                         }
                         if (bResult) {
-                            var secret = Speakeasy.generateSecret({ name: result[0].name });
+                            const secret = Speakeasy.generateSecret({ name: result[0].name });
                             console.log(secret);
-                            var verify = Speakeasy.totp.verify({
-                                secret: 'NNRDAXTHPF3W623QMV2FKYZQLVASUSKCEFMCKZSRM5ITMYZOG4XA',
+                            var token = Speakeasy.totp({
+                                // secret: 'NNRDAXTHPF3W623QMV2FKYZQLVASUSKCEFMCKZSRM5ITMYZOG4XA',
+                                secret: secret.base32,
                                 encoding: "base32",
-                                token: "194758"
+                            });
+                            // let remaining = 30 - Math.floor((new Date().getTime() / 1000.0) % 30);
+                            // res.render("token", { token, remaining });
+                            console.log(token);
+                            var verify = Speakeasy.totp.verify({
+                                // secret: 'NNRDAXTHPF3W623QMV2FKYZQLVASUSKCEFMCKZSRM5ITMYZOG4XA',
+                                secret: secret.base32,
+                                // secret: secret,  
+                                encoding: "base32",
+                                token: req.body.TokenClient
                             });
                             console.log(verify);
                             // return res.status(200).send({
@@ -139,14 +149,14 @@ router.post('/login', loginValidation, (req, res, next) => {
                             // const token = jwt.sign({ id: result[0].id }, 'the-super-strong-secrect', { expiresIn: '1h' });
                             // db.query(
                             //     `UPDATE users SET last_login = now() WHERE id = '${result[0].id}'`
-                            // );
+                            // );   
                             if (verify) {
                                 return res.status(200).send({
                                     msg: 'Logged in!',
                                     user: result[0]
                                 });
                             }
-                            else{
+                            else {
                                 return res.status(401).send({
                                     msg: 'Please include a valid OTP'
                                 })
