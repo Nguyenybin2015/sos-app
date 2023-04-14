@@ -93,82 +93,10 @@ router.post('/register', signupValidation, (req, res, next) => {
     );
 });
 
-router.post('/login', loginValidation, (req, res, next) => {
+router.post('/login', (req, res, next) => {
     var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
     if (emailRegex.test(req.body.email)) {
-        db.query(
-            `SELECT * FROM users WHERE email = ${db.escape(req.body.email)};`,
-            (err, result) => {
-                // user does not exists
-                if (err) {
-                    throw err;
-                    return res.status(400).send({
-                        msg: err
-                    });
-                }
-                if (!result.length) {
-                    return res.status(401).send({
-                        msg: 'Email or password is incorrect!'
-                    });
-                }
-                // check password
-                bcrypt.compare(
-                    req.body.password,
-                    result[0]['password'],
-                    (bErr, bResult) => {
-                        // wrong password
-                        if (bErr) {
-                            throw bErr;
-                            return res.status(401).send({
-                                msg: 'Email or password is incorrect!'
-                            });
-                        }
-                        if (bResult) {
-                            const secret = Speakeasy.generateSecret({ name: result[0].name });
-                            console.log(secret);
-                            var token = Speakeasy.totp({
-                                // secret: 'NNRDAXTHPF3W623QMV2FKYZQLVASUSKCEFMCKZSRM5ITMYZOG4XA',
-                                secret: secret.base32,
-                                encoding: "base32",
-                            });
-                            // let remaining = 30 - Math.floor((new Date().getTime() / 1000.0) % 30);
-                            // res.render("token", { token, remaining });
-                            console.log(token);
-                            var verify = Speakeasy.totp.verify({
-                                // secret: 'NNRDAXTHPF3W623QMV2FKYZQLVASUSKCEFMCKZSRM5ITMYZOG4XA',
-                                secret: secret.base32,
-                                // secret: secret,  
-                                encoding: "base32",
-                                token: req.body.TokenClient
-                            });
-                            console.log(verify);
-                            // return res.status(200).send({
-                            //     msg: 'Logged in!',
-                            //     user: result[0]
-                            // });
-                            // const token = jwt.sign({ id: result[0].id }, 'the-super-strong-secrect', { expiresIn: '1h' });
-                            // db.query(
-                            //     `UPDATE users SET last_login = now() WHERE id = '${result[0].id}'`
-                            // );   
-                            if (verify) {
-                                return res.status(200).send({
-                                    msg: 'Logged in!',
-                                    user: result[0]
-                                });
-                            }
-                            else {
-                                return res.status(401).send({
-                                    msg: 'Please include a valid OTP'
-                                })
-                            }
-                        }
-                        return res.status(401).send({
-                            msg: 'Username or password is incorrect!'
-                        });
-                    }
-                );
-            }
-        );
+        next();
     }
     else {
         console.log("Email or password is invalid");
@@ -176,6 +104,77 @@ router.post('/login', loginValidation, (req, res, next) => {
             msg: 'Please include a valid email and password'
         });
     }
+}, (req, res, next) => {
+    db.query(
+        `SELECT * FROM users WHERE email = ${db.escape(req.body.email)};`,
+        (err, result) => {
+            // user does not exists
+            if (err) {
+                throw err;
+                return res.status(400).send({
+                    msg: err
+                });
+            }
+            if (!result.length) {
+                return res.status(401).send({
+                    msg: 'Email or password is incorrect!'
+                });
+            }
+            // check password
+            bcrypt.compare(
+                req.body.password,
+                result[0]['password'],
+                (bErr, bResult) => {
+                    // wrong password
+                    if (bErr) {
+                        throw bErr;
+                        return res.status(401).send({
+                            msg: 'Email or password is incorrect!'
+                        });
+                    }
+                    if (bResult) {
+                        const secret = Speakeasy.generateSecret({ name: result[0].name });
+                        console.log(secret);
+                        var token = Speakeasy.totp({
+                            secret: 'JFTDSLBBG42GSWCIOQZU4NBSEZ4XUSLOGVTTCSSMIA2HIU2IKMTA',
+                            // secret: secret.base32,
+                            encoding: "base32",
+                        });
+                        if (token != null) {
+                            return res.send({
+                                token: token
+                            });
+                        }
+                        // res.status(200).json({ otp: token });
+                        // let remaining = 30 - Math.floor((new Date().getTime() / 1000.0) % 30);
+                        // res.render("token", { token, remaining });
+                        console.log(token);
+                        var verify = Speakeasy.totp.verify({
+                            secret: 'JFTDSLBBG42GSWCIOQZU4NBSEZ4XUSLOGVTTCSSMIA2HIU2IKMTA',
+                            encoding: "base32",
+                            token: req.body.TokenClient
+                        });
+                        console.log(verify);
+                        if (verify) {
+                            return res.status(200).send({
+                                msg: 'Logged in!',
+                                user: result[0]
+                            });
+                        }
+                        else {
+                            return res.status(401).send({
+                                msg: 'Please include a valid OTP'
+                            })
+                        }
+                    }
+
+                    return res.status(401).send({
+                        msg: 'Username or password is incorrect!'
+                    });
+                }
+            );
+        }
+    );
 });
 
 // router.get('/logout', (req, res) => {
