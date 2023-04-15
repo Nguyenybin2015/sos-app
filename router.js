@@ -16,14 +16,16 @@ router.post('/register', signupValidation, (req, res, next) => {
         (err, result) => {
             if (result.length) {
                 return res.status(409).send({
-                    msg: 'This user is already in use!'
+                    msg: 'This user is already in use!',
+                    status: '409 Conflict'
                 });
             } else {
                 // username is available
                 bcrypt.hash(req.body.password, 10, (err, hash) => {
                     if (err) {
                         return res.status(500).send({
-                            msg: err
+                            msg: err,
+                            status: '500 Internal Server Error'
                         });
                     } else {
                         // has hashed pw => add to database
@@ -34,12 +36,14 @@ router.post('/register', signupValidation, (req, res, next) => {
                             (err, result) => {
                                 if (err) {
                                     return res.status(400).send({
-                                        msg: err
+                                        msg: err,
+                                        status: '400 Bad Request'
                                     });
                                     throw err;
                                 }
                                 return res.status(201).send({
-                                    msg: 'The user has been registerd with us!'
+                                    msg: 'The user has been registerd with us!',
+                                    status: '201 Created'
                                 });
                             }
                         );
@@ -51,6 +55,7 @@ router.post('/register', signupValidation, (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
+    // check email valid or invalid
     var emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
     if (emailRegex.test(req.body.email)) {
         next();
@@ -58,7 +63,8 @@ router.post('/login', (req, res, next) => {
     else {
         console.log("Email or password is invalid");
         return res.status(401).send({
-            msg: 'Please include a valid email and password'
+            msg: 'Please include a valid email and password',
+            status: '401 Unauthorized'
         });
     }
 }, (req, res, next) => {
@@ -69,12 +75,14 @@ router.post('/login', (req, res, next) => {
             if (err) {
                 throw err;
                 return res.status(400).send({
-                    msg: err
+                    msg: err,
+                    status: '400 Bad Request'
                 });
             }
             if (!result.length) {
                 return res.status(401).send({
-                    msg: 'Email or password is incorrect!'
+                    msg: 'Email or password is incorrect!',
+                    status: '401 Unauthorized'
                 });
             }
             // check password
@@ -86,7 +94,8 @@ router.post('/login', (req, res, next) => {
                     if (bErr) {
                         throw bErr;
                         return res.status(401).send({
-                            msg: 'Email or password is incorrect!'
+                            msg: 'Email or password is incorrect!',
+                            status: '401 Unauthorized'
                         });
                     }
                     if (bResult) {
@@ -94,7 +103,6 @@ router.post('/login', (req, res, next) => {
                         console.log(secret);
                         var token = Speakeasy.totp({
                             secret: 'JFTDSLBBG42GSWCIOQZU4NBSEZ4XUSLOGVTTCSSMIA2HIU2IKMTA',
-                            // secret: secret.base32,
                             encoding: "base32",
                         });
                         console.log(token);
@@ -109,23 +117,26 @@ router.post('/login', (req, res, next) => {
                             if (verify) {
                                 return res.status(200).send({
                                     msg: 'Logged in!',
-                                    user: result[0]
+                                    user: result[0],
+                                    status: '200 OK'
                                 });
                             }
                             else {
                                 return res.Pleasestatus(401).send({
-                                    msg: ' include a valid OTP'
+                                    msg: 'Include a valid OTP',
+                                    status: '401 Unauthorized'
                                 })
                             }
                         } catch (verify) {
                             return res.send({
                                 TokenClient: token
                             });
-                            
+
                         }
                     }
                     return res.status(401).send({
-                        msg: 'Username or password is incorrect!'
+                        msg: 'Username or password is incorrect!',
+                        status: '401 Unauthorized'
                     });
                 }
             );
