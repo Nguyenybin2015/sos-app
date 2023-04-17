@@ -6,6 +6,7 @@ const { validationResult, check } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Speakeasy = require("speakeasy");
+require('dotenv').config();
 
 
 router.post('/register', signupValidation, (req, res, next) => {
@@ -100,16 +101,17 @@ router.post('/login', (req, res, next) => {
                     }
                     if (bResult) {
                         const secret = Speakeasy.generateSecret({ name: result[0].name });
-                        console.log(secret);
+                        // console.log(secret);
                         var token = Speakeasy.totp({
-                            secret: 'JFTDSLBBG42GSWCIOQZU4NBSEZ4XUSLOGVTTCSSMIA2HIU2IKMTA',
+                            secret: process.env.SECRET_TOKEN,
                             encoding: "base32",
                         });
-                        console.log(token);
-                        console.log(req.body.TokenClient);
+                        // console.log(process.env.SECRET_TOKEN)
+                        // console.log(token);
+                        // console.log(req.body.TokenClient);
                         try {
                             var verify = Speakeasy.totp.verify({
-                                secret: 'JFTDSLBBG42GSWCIOQZU4NBSEZ4XUSLOGVTTCSSMIA2HIU2IKMTA',
+                                secret: process.env.SECRET_TOKEN,
                                 encoding: "base32",
                                 token: req.body.TokenClient
                             });
