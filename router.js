@@ -186,11 +186,79 @@ router.get('/users/:userId', (req, res, next) => {
     });
 
 });
+// router.put('/users/:userId', (req, res, next) => {
+//     const userId = req.params.userId;
+
+//     db.query(`SELECT * FROM users, profile_user WHERE id = ${userId}`, (err, result) => {
+//         console.log({ result })
+//         if (err) {
+//             console.log(err);
+//             res.status(500).send('Internal server error');
+//         } else {
+//             if (result.length === 0) {
+//                 res.status(404).send('User not found');
+//             } else {
+//                 const user = result[0];
+
+//                 if (req.body.name) user.name = req.body.name;
+//                 console.log(req.body.name);
+//                 // if (req.body.email) user.email = req.body.email;
+//                 // if (req.body.password) user.password = req.body.password;
+//                 // if (req.body.phone) user.phone = req.body.phone;
+//                 if (req.body.avatar) user.avatar = req.body.avatar;
+//                 if (req.body.lock_deposits) user.lock_deposits = req.body.lock_deposits;
+//                 if (req.body.lock_withdrawals) user.lock_withdrawals = req.body.lock_withdrawals;
+//                 if (req.body.maintenance) user.maintenance = req.body.maintenance;
+//                 if (req.body.close_system) user.close_system = req.body.close_system;
+
+//                 // Update the user's profile information in the database
+//                 console.log(user.name)
+//                 console.log(user.avatar)
+//                 console.log(user.lock_deposits)
+//                 console.log(user.lock_withdrawals)
+//                 console.log(user.maintenance)
+//                 console.log(user.close_system)
+//                 console.log(user.id)
+//                 db.query(`UPDATE users, profile_user SET name = '${user.name}', avatar = ${user.avatar}, lock_deposits = ${user.lock_deposits}, lock_withdrawals = ${user.lock_withdrawals}, maintenance = ${user.maintenance}, close_system = ${user.close_system}  WHERE id = ${user.id}`, (err, result) => {
+//                     if (err) {
+//                         console.log(err);
+//                         res.status(500).send('Internal server error');
+//                     } else {
+//                         if (result.affectedRows === 0) {
+//                             res.status(400).send('Invalid request');
+//                         } else {
+//                             res.status(200).send('Profile updated successfully');
+//                             // console.log(userId)
+//                             db.query(`SELECT * FROM users, profile_user WHERE id = ${userId}`, (err, user) => { console.log({ user }) });
+
+//                         }
+//                     }
+//                 });
+//                 // db.query(`UPDATE users, profile_user SET name = ?, avatar = ?, lock_deposits = ?, lock_withdrawals = ?, maintenance = ?, close_system = ?  WHERE id = ?`, [user.name, user.avatar, user.lock_deposits, user.lock_withdrawals, user.maintenance, user.close_system, userId], (err, result) => {
+//                 //     if (err) {
+//                 //         console.log(err);
+//                 //         res.status(500).send('Internal server error');
+//                 //     } else {
+//                 //         if (result.affectedRows === 0) {
+//                 //             res.status(400).send('Invalid request');
+//                 //         } else {
+//                 //             res.status(200).send('Profile updated successfully');
+//                 //             // console.log(userId)
+//                 //             db.query(`SELECT * FROM users, profile_user WHERE id = ${userId}`, (err, user) => { console.log({user})});
+
+//                 //         }
+//                 //     }
+//                 // });
+//             }
+//         }
+//     });
+
+// });
 router.put('/users/:userId', (req, res, next) => {
     const userId = req.params.userId;
 
-    db.query(`SELECT * FROM users, profile_user WHERE id = ${userId}`, (err, result) => {
-        console.log({ result })
+    // Check if the user exists
+    db.query(`SELECT * FROM users WHERE id = ${userId}`, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500).send('Internal server error');
@@ -198,63 +266,35 @@ router.put('/users/:userId', (req, res, next) => {
             if (result.length === 0) {
                 res.status(404).send('User not found');
             } else {
+                // Update the user's profile information
                 const user = result[0];
+                console.log(req.body);
 
-                if (req.body.name) user.name = req.body.name;
-                console.log(req.body.name);
-                // if (req.body.email) user.email = req.body.email;
-                // if (req.body.password) user.password = req.body.password;
-                // if (req.body.phone) user.phone = req.body.phone;
-                if (req.body.avatar) user.avatar = req.body.avatar;
-                if (req.body.lock_deposits) user.lock_deposits = req.body.lock_deposits;
-                if (req.body.lock_withdrawals) user.lock_withdrawals = req.body.lock_withdrawals;
-                if (req.body.maintenance) user.maintenance = req.body.maintenance;
-                if (req.body.close_system) user.close_system = req.body.close_system;
+                user.name = req.body.name;
+                user.avatar = req.body.avatar;
+                user.lock_deposits = req.body.lock_deposits;
+                user.lock_withdrawals = req.body.lock_withdrawals;
+                user.maintenance = req.body.maintenance;
+                user.close_system = req.body.close_system;
 
                 // Update the user's profile information in the database
-                console.log(user.name)
-                console.log(user.avatar)
-                console.log(user.lock_deposits)
-                console.log(user.lock_withdrawals)
-                console.log(user.maintenance)
-                console.log(user.close_system)
-                console.log(user.id)
-                db.query(`UPDATE users, profile_user SET name = '${user.name}, avatar = ${user.avatar}, lock_deposits = ${user.lock_deposits}, lock_withdrawals = ${user.lock_withdrawals}, maintenance = ${user.maintenance}, close_system = ${user.close_system}  WHERE id = ${user.id}`, (err, result) => {
-                    if (err) {
-                        console.log(err);
-                        res.status(500).send('Internal server error');
-                    } else {
-                        if (result.affectedRows === 0) {
-                            res.status(400).send('Invalid request');
+                db.query(`UPDATE users, profile_user SET name = ?, avatar = ?, lock_deposits = ?, lock_withdrawals = ?, maintenance = ?, close_system = ?`, [user.name, user.avatar, user.lock_deposits, user.lock_withdrawals, user.maintenance, user.close_system],
+                    (err, result) => {
+                        if (err) {
+                            console.log(err);
+                            res.status(500).send('Internal server error');
                         } else {
-                            res.status(200).send('Profile updated successfully');
-                            // console.log(userId)
-                            db.query(`SELECT * FROM users, profile_user WHERE id = ${userId}`, (err, user) => { console.log({ user }) });
-
+                            if (result.affectedRows === 0) {
+                                res.status(400).send('Invalid request');
+                            } else {
+                                res.status(200).send('Profile updated successfully');
+                            }
                         }
-                    }
-                });
-                // db.query(`UPDATE users, profile_user SET name = ?, avatar = ?, lock_deposits = ?, lock_withdrawals = ?, maintenance = ?, close_system = ?  WHERE id = ?`, [user.name, user.avatar, user.lock_deposits, user.lock_withdrawals, user.maintenance, user.close_system, userId], (err, result) => {
-                //     if (err) {
-                //         console.log(err);
-                //         res.status(500).send('Internal server error');
-                //     } else {
-                //         if (result.affectedRows === 0) {
-                //             res.status(400).send('Invalid request');
-                //         } else {
-                //             res.status(200).send('Profile updated successfully');
-                //             // console.log(userId)
-                //             db.query(`SELECT * FROM users, profile_user WHERE id = ${userId}`, (err, user) => { console.log({user})});
-
-                //         }
-                //     }
-                // });
+                    });
             }
         }
     });
-
 });
-
 // router.get('/logout', (req, res) => {
 //     if (condition) {
 
