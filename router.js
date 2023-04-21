@@ -45,11 +45,14 @@ router.post('/register', signupValidation, (req, res, next) => {
                                             status: '500 Internal Server Error'
                                         });
                                     } else {
-                                        db.query(`SELECT id FROM users WHERE email = ${db.escape(req.body.email)}`, (err, id) => {
-                                            // console.log(id)
+                                        db.query(`SELECT id FROM users WHERE email = ${db.escape(req.body.email)}`, async (err, id) => {
+                                            // const hashid = await bcrypt.hash(JSON.stringify(id), 3);
+                                            // const hashedUserId = hashid.toString();
+                                            // console.log(hashedUserId);
+                                            var hashedUserId = jwt.sign({ foo: id }, process.env.SECRET_TOKEN);
                                             res.status(201).send({
                                                 msg: 'The user has been registerd with us!',
-                                                user: id[0],
+                                                userToken: hashedUserId,
                                                 status: '201 Created'
                                             });
                                         });
@@ -57,24 +60,6 @@ router.post('/register', signupValidation, (req, res, next) => {
                                 });
                             }
                         });
-                        // has hashed pw => add to database
-                        // db.query(
-                        //     `INSERT INTO users (name, email, password) VALUES ('${req.body.name}', ${db.escape(req.body.email)}, ${db.escape(hash)}),
-                        //     INSERT INTO profile_user (email) VALUES (${db.escape(req.body.email)})`,
-                        //     (err, result) => {
-                        //         if (err) {
-                        //             return res.status(400).send({
-                        //                 msg: err,
-                        //                 status: '400 Bad Request'
-                        //             });
-                        //             throw err;
-                        //         }
-                        //         return res.status(201).send({
-                        //             msg: 'The user has been registerd with us!',
-                        //             status: '201 Created'
-                        //         });
-                        //     }
-                        // );
                     }
                 });
             }
@@ -170,8 +155,12 @@ router.post('/login', (req, res, next) => {
     );
 });
 
-router.get('/users/:userId', (req, res, next) => {
-    const userId = req.params.userId;
+router.get('/users/:userToken', (req, res, next) => {
+    const userToken = req.params.userToken;
+    jwt.verify(userToken, process.env.SECRET_TOKEN, (err, decoded) => {
+        var tokenToId = Object.values(Object.values(decoded.foo)[0])[0]; //change token to id object
+        userId = tokenToId.toString(); // convert token to string
+    });
 
     db.query(`SELECT * FROM users, profile_user WHERE id = ${userId}`, (err, rows) => {
         if (err) {
@@ -188,8 +177,12 @@ router.get('/users/:userId', (req, res, next) => {
 
 });
 
-router.put('/users/:userId', (req, res, next) => {
-    const userId = req.params.userId;
+router.put('/users/:userToken', (req, res, next) => {
+    const userToken = req.params.userToken;
+    jwt.verify(userToken, process.env.SECRET_TOKEN, (err, decoded) => {
+        var tokenToId = Object.values(Object.values(decoded.foo)[0])[0]; //change token to id object
+        userId = tokenToId.toString(); // convert token to string
+    });
 
     // Check if the user exists
     db.query(`SELECT * FROM users INNER JOIN profile_user ON users.email = profile_user.email WHERE users.id = ${userId} `, async (err, result) => {
@@ -211,13 +204,13 @@ router.put('/users/:userId', (req, res, next) => {
                 if (req.body.lock_withdrawals) user.lock_withdrawals = req.body.lock_withdrawals;
                 if (req.body.maintenance) user.maintenance = req.body.maintenance;
                 if (req.body.close_system) user.close_system = req.body.close_system;
-                if(req.body.email){
+                if (req.body.email) {
                     if (emailRegex.test(req.body.email)) {
-                        user.email= req.body.email;
+                        user.email = req.body.email;
                     }
                     else {
                         console.log("Email or password is invalid");
-                            res.status(401).send({
+                        res.status(401).send({
                             msg: 'Please include a valid email and password',
                             status: '401 Unauthorized'
                         });
