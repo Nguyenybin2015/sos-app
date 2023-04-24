@@ -1,6 +1,7 @@
-import { Router } from "express";
+import { Router } from 'express';
 import authRoutes from './auth.route.js';
-const indexRouters = Router();  
+
+const indexRouters = Router();
 
 indexRouters.use('/auth', authRoutes);
 

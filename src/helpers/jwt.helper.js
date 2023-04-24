@@ -1,12 +1,13 @@
-import { sign, verify } from "jsonwebtoken";
+/* eslint-disable consistent-return */
+import jwt from 'jsonwebtoken';
 
 export function generateToken(payload, keySecret, time) {
   return new Promise((resolve, reject) => {
-    sign(
+    jwt.sign(
       payload,
       keySecret,
       {
-        algorithm: "HS256",
+        algorithm: 'HS256',
         expiresIn: time,
       },
       (error, token) => {
@@ -19,9 +20,9 @@ export function generateToken(payload, keySecret, time) {
 
 export function verifyToken(token, keySecret) {
   return new Promise((resolve, reject) => {
-    verify(token, keySecret, (error, decoded) => {
-        if (error) return reject(error);
-        resolve(decoded);
+    jwt.verify(token, keySecret, (error, decoded) => {
+      if (error) return reject(error);
+      resolve(decoded);
     });
   });
 }

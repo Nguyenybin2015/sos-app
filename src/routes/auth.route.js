@@ -1,11 +1,11 @@
-import { Router } from "express";
-import { login, registerAccount } from "../controllers/auth.controller.js";
-import { registerValidation } from "../validates/validates.body-request.js";
+import { Router } from 'express';
+import { login, registerAccount } from '../controllers/auth.controller.js';
+import { registerValidation } from '../validates/validates.body-request.js';
 
 const authRoutes = Router();
 
 authRoutes.post('/login', login);
 
-authRoutes.post('/register-acount', registerValidation, registerAccount);
+authRoutes.get('/register-acount', registerValidation, registerAccount);
 
 export default authRoutes;

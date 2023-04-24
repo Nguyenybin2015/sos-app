@@ -1,24 +1,19 @@
-import { httpStatus } from "../constants/constants.http-status.code.js";
-import { authMsg, serverMsg } from "../constants/constants.message-response.js";
-import { registerAccountService } from "../services/auth.service.js";
+import { httpStatus } from '../constants/constants.http-status.code.js';
+import { authMsg, serverMsg } from '../constants/constants.message-response.js';
+import { registerAccountService } from '../services/auth.service.js';
+import responseRequest from '../utils/utils.response.js';
+import execptionErrorCommon from '../exceptions/exception.errror-common.js';
 
 export async function registerAccount(req, res) {
   try {
     const { body } = req;
     const result = await registerAccountService(res, body);
     if (!res.headerSent) {
-      res.status(httpStatus.ok).send({
-        statusCode: httpStatus.ok,
-        data: result,
-        message: authMsg.registerAccount,
-      });
+      responseRequest(res, result, authMsg.registerAccount);
     }
-    // res.send({ msg: 'hello' })
-  } catch (error) {
-    res.status(httpStatus.serverInterval).send({
-      statusCode: httpStatus.serverInterval,
-      message: serverMsg,
-    });
+  }
+  catch (error) {
+    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }
 
