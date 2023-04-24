@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 export const httpStatus = {
   ok: 200,
   created: 201,

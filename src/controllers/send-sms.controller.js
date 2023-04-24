@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+
 dotenv.config();
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
@@ -10,4 +11,4 @@ client.messages
     from: '+15017122661',
     to: '+15558675310'
   })
-  .then(message => console.log(message.sid));
+  .then((message) => console.log(message.sid));

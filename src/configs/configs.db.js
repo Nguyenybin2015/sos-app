@@ -1,5 +1,7 @@
+/* eslint-disable import/prefer-default-export */
 import dotenv from 'dotenv';
 import knex from 'knex';
+
 dotenv.config();
 
 export const db = knex({
@@ -12,5 +14,4 @@ export const db = knex({
     database: process.env.DATABASE_NAME
   },
   useNullAsDefault: true,
-})
-
+});
