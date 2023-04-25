@@ -12,4 +12,14 @@ export const authMsg = {
   unauthorized: 'unauthorized',
   login: 'Login success',
   otpRequired: 'Include a valid OTP',
+  verifyOtpSuccess: 'Verify otp success',
+  invalidOtp: 'Otp invalid'
+};
+
+export const bankMsg = {
+  importBanks: 'Import bank list success',
+  addNew: 'Add new bank success',
+  getById: 'Get bank by id success',
+  notFound: 'Bank not found',
+  existedCode: 'Bank existed already'
 };

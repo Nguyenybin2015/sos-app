@@ -23,7 +23,7 @@ export async function registerAccountService(res, body) {
 }
 
 export async function loginService(res, body) {
-  const { email = '', password = '', tokenClient = '' } = body;
+  const { email = '', password = '' } = body;
   const result = await findUserByEmail(email);
   const userInfo = result[0];
   if (!userInfo) {
@@ -38,19 +38,10 @@ export async function loginService(res, body) {
       authMsg.unauthorized
     );
   }
-  // const generateSecretCode = Speakeasy.generateSecret(userInfo.name);
   const token = Speakeasy.totp({
-    secret: process.env.SECRET_TOKEN,
+    secret: process.env.SECRET_OTP_TOKEN,
     encoding: 'base32',
   });
-  const verifyToken = Speakeasy.totp.verify({
-    secret: process.env.SECRET_TOKEN,
-    encoding: 'base32',
-    token: tokenClient,
-  });
-  if (!verifyToken) {
-    return execptionErrorCommon(res, httpStatus.unauthorized, authMsg.otpRequired);
-  }
   const accessToken = await generateToken(
     { id: userInfo.id, name: userInfo.name, email: userInfo.email },
     process.env.SECRET_TOKEN,
@@ -58,7 +49,20 @@ export async function loginService(res, body) {
   );
   return {
     ...userInfo,
-    token,
+    otpCode: token,
     accessToken,
   };
+}
+
+export function verifyOtpService(res, body) {
+  const { otpCode = '' } = body;
+  const verifyToken = Speakeasy.totp.verify({
+    secret: process.env.SECRET_OTP_TOKEN,
+    encoding: 'base32',
+    token: otpCode,
+  });
+  if (!verifyToken) {
+    return execptionErrorCommon(res, httpStatus.unauthorized, authMsg.otpRequired);
+  }
+  return authMsg.verifyOtpSuccess;
 }
