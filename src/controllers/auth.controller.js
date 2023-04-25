@@ -26,6 +26,7 @@ export async function login(req, res) {
       responseRequest(res, result, authMsg.login);
     }
   } catch (error) {
+    console.log('error', error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }

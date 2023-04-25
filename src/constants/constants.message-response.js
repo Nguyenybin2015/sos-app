@@ -11,4 +11,5 @@ export const authMsg = {
   registerAccount: 'Register account success',
   unauthorized: 'unauthorized',
   login: 'Login success',
+  otpRequired: 'Include a valid OTP',
 };
