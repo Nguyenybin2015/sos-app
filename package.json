@@ -61,7 +61,8 @@
       "one-var": [
         "off"
       ],
-      "import/named": ["off"]
+      "import/named": ["off"],
+      "max-len": "off"
     }
   }
 }

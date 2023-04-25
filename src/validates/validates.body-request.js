@@ -1,8 +1,10 @@
 /* eslint-disable import/prefer-default-export */
-import { check } from 'express-validator';
+import { body } from 'express-validator';
 
 export const registerValidation = [
-  check('name', 'Name is requied').not().isEmpty(),
-  check('email', 'Please include a valid email').isEmail().normalizeEmail({ gmail_remove_dots: true }),
-  check('password', 'Password must be 6 or more characters').isLength({ min: 6 })
+  body('name').optional().isString('name must is type string'),
+  body('email').exists().withMessage('email is required').isEmail()
+    .withMessage('email must is format as example@gmail.com'),
+  body('password').exists().withMessage('password is required').isLength({ min: 6, max: 20 })
+    .withMessage('password must is > 5 and < 20 character')
 ];
