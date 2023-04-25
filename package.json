@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start:watch": "nodemon src/index.js",
+    "start:dev": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -17,9 +19,49 @@
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
     "jsonwebtoken": "^9.0.0",
+    "knex": "^2.4.2",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.22",
     "speakeasy": "^2.0.0",
     "twilio": "^4.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "rules": {
+      "linebreak-style": ["off"],
+      "import/extensions": [
+        "off"
+      ],
+      "consistent-return": ["off"],
+      "no-param-reassign": ["off"],
+      "no-console": ["off"],
+      "brace-style": [
+        "off",
+        "stroustrup"
+      ],
+      "comma-dangle": [
+        "off",
+        "never"
+      ],
+      "no-unused-vars": [
+        "off"
+      ],
+      "no-var": [
+        "off"
+      ],
+      "one-var": [
+        "off"
+      ],
+      "import/named": ["off"]
+    }
   }
 }
