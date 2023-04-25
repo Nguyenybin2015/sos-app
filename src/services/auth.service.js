@@ -1,18 +1,21 @@
 /* eslint-disable import/no-unresolved */
+import Speakeasy from 'speakeasy';
+import dotenv from 'dotenv';
 import { httpStatus } from '../constants/constants.http-status.code.js';
-import { authMsg } from '../constants/constants.message-response.js';
+import { authMsg, userMsg } from '../constants/constants.message-response.js';
 import { hashPassword, comparePassWord } from '../utils/utils.bcrypt.js';
 import { findUserByEmail } from '../access-database/user.model.js';
+import execptionErrorCommon from '../exceptions/exception.errror-common.js';
+import { generateToken } from '../helpers/jwt.helper.js';
+
+dotenv.config();
 
 export async function registerAccountService(res, body) {
   const { email = '', password = '' } = body;
   const result = await findUserByEmail(email);
   console.log('result', result);
   if (result.length) {
-    return res.status(httpStatus.conflict).send({
-      statusCode: httpStatus.conflict,
-      message: authMsg.conflict,
-    });
+    return execptionErrorCommon(res, httpStatus.conflict, authMsg.conflict);
   }
   const hashPass = await hashPassword(password);
   console.log('hashPass', hashPass);
@@ -20,7 +23,42 @@ export async function registerAccountService(res, body) {
 }
 
 export async function loginService(res, body) {
-  const { email = '' } = body;
+  const { email = '', password = '', tokenClient = '' } = body;
   const result = await findUserByEmail(email);
-  return result;
+  const userInfo = result[0];
+  if (!userInfo) {
+    return execptionErrorCommon(res, httpStatus.notFound, userMsg.notFound);
+  }
+  const userPassword = userInfo.password;
+  const isComparePass = await comparePassWord(password, userPassword);
+  if (!isComparePass) {
+    return execptionErrorCommon(
+      res,
+      httpStatus.unauthorized,
+      authMsg.unauthorized
+    );
+  }
+  // const generateSecretCode = Speakeasy.generateSecret(userInfo.name);
+  const token = Speakeasy.totp({
+    secret: process.env.SECRET_TOKEN,
+    encoding: 'base32',
+  });
+  const verifyToken = Speakeasy.totp.verify({
+    secret: process.env.SECRET_TOKEN,
+    encoding: 'base32',
+    token: tokenClient,
+  });
+  if (!verifyToken) {
+    return execptionErrorCommon(res, httpStatus.unauthorized, authMsg.otpRequired);
+  }
+  const accessToken = await generateToken(
+    { id: userInfo.id, name: userInfo.name, email: userInfo.email },
+    process.env.SECRET_TOKEN,
+    process.env.TIME_LIFE_TOKEN
+  );
+  return {
+    ...userInfo,
+    token,
+    accessToken,
+  };
 }
