@@ -10,4 +10,5 @@ export const authMsg = {
   inValid: 'Email or password incorrect!',
   registerAccount: 'Register account success',
   unauthorized: 'unauthorized',
+  login: 'Login success',
 };
