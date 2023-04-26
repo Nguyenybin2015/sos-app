@@ -12,7 +12,7 @@ export default function initSchemaTables() {
       return db.schema.createTable(userTable, (table) => {
         table.uuid('id').primary().defaultTo(db.raw('(UUID())'));
         table.string('name', 250);
-        table.string('email', 250).unique();
+        table.string('email', 250);
         table.string('password', 500);
         table.timestamp('created_at').notNullable().defaultTo(db.raw('now()'));
         table.timestamp('updated_at').notNullable().defaultTo(db.raw('now()'));
@@ -27,8 +27,7 @@ export default function initSchemaTables() {
         table.string('name', 250);
         table.string('description', 500);
         table.string('location', 500);
-        table.string('branch', 250);
-        table.string('code', 50);
+        table.string('short_name', 50);
         table.string('icon', 500);
         table.timestamp('created_at').notNullable().defaultTo(db.raw('now()'));
         table.timestamp('updated_at').notNullable().defaultTo(db.raw('now()'));

@@ -14,6 +14,7 @@ Project SOS-APP
 `
 - knex org: https://knexjs.org/guide
 - validator: https://express-validator.github.io/docs
+- bank info: http://data.ibt.org.vn/Home/Banks
 `
 
 ### run project

@@ -18,9 +18,10 @@ export const authMsg = {
 };
 
 export const bankMsg = {
-  importBanks: 'Import bank list success',
+  initBanks: 'Init bank list success',
   addNew: 'Add new bank success',
   getById: 'Get bank by id success',
   notFound: 'Bank not found',
-  existedCode: 'Bank existed already'
+  existedCode: 'Bank existed already',
+  getAllBank: 'Get all banks success',
 };

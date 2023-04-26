@@ -2,6 +2,8 @@ import {
   findBankById,
   findBankByCollunm,
   inserNewBank,
+  initMultiBank,
+  findAllBanks,
 } from '../access-database/bank.model.js';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { bankMsg } from '../constants/constants.message-response.js';
@@ -16,11 +18,21 @@ export async function getBankIdService(res, id) {
 }
 
 export async function addNewBankService(res, body) {
-  const { code } = body;
-  const existedBank = await findBankByCollunm('code', code);
+  const { shortName } = body;
+  const existedBank = await findBankByCollunm('short_name', shortName);
   if (existedBank) {
     return execptionErrorCommon(res, httpStatus.conflict, bankMsg.existedCode);
   }
-  const result = await inserNewBank(body);
-  return result;
+  await inserNewBank({ ...body, short_name: shortName });
+  return true;
+}
+
+export async function initBankListService() {
+  await initMultiBank();
+  return true;
+}
+
+export async function findAllBankService(query) {
+  const results = await findAllBanks(query);
+  return results;
 }

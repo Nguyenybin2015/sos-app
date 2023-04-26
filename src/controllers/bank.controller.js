@@ -4,7 +4,9 @@ import execptionErrorCommon from '../exceptions/exception.errror-common.js';
 import responseRequest from '../utils/utils.response.js';
 import {
   addNewBankService,
+  findAllBankService,
   getBankIdService,
+  initBankListService,
 } from '../services/bank.service.js';
 
 export async function getBankByIdController(req, res) {
@@ -15,7 +17,6 @@ export async function getBankByIdController(req, res) {
       responseRequest(res, result, bankMsg.getById);
     }
   } catch (error) {
-    console.log('error', error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }
@@ -28,6 +29,30 @@ export async function addNewBankController(req, res) {
       responseRequest(res, result, bankMsg.addNew);
     }
   } catch (error) {
+    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+
+export async function initBanksController(req, res) {
+  try {
+    const result = await initBankListService();
+    if (!res.headersSent) {
+      responseRequest(res, result, bankMsg.initBanks);
+    }
+  } catch (error) {
+    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+
+export async function getListBankController(req, res) {
+  try {
+    const { query } = req;
+    const result = await findAllBankService(query);
+    if (!res.headersSent) {
+      responseRequest(res, result, bankMsg.getAllBank);
+    }
+  } catch (error) {
+    console.log('error', error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }
