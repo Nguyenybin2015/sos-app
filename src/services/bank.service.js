@@ -4,6 +4,8 @@ import {
   inserNewBank,
   initMultiBank,
   findAllBanks,
+  updateBank,
+  deleteBank
 } from '../access-database/bank.model.js';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { bankMsg } from '../constants/constants.message-response.js';
@@ -23,6 +25,7 @@ export async function addNewBankService(res, body) {
   if (existedBank) {
     return execptionErrorCommon(res, httpStatus.conflict, bankMsg.existedCode);
   }
+  delete body.shortName;
   await inserNewBank({ ...body, short_name: shortName });
   return true;
 }
@@ -35,4 +38,29 @@ export async function initBankListService() {
 export async function findAllBankService(query) {
   const results = await findAllBanks(query);
   return results;
+}
+
+export async function updateBankService(res, id, body) {
+  try {
+    const { shortName } = body;
+    await findBankById(id);
+    if (shortName) {
+      body.short_name = shortName;
+      delete body.shortName;
+    }
+    await updateBank(id, body);
+    return true;
+  } catch (error) {
+    return execptionErrorCommon(res, httpStatus.serverInterval, bankMsg.updateFailed);
+  }
+}
+
+export async function deleteBankService(res, id) {
+  try {
+    await findBankById(id);
+    await deleteBank(id);
+    return true;
+  } catch (error) {
+    return execptionErrorCommon(res, httpStatus.serverInterval, bankMsg.deleteFailed);
+  }
 }

@@ -10,7 +10,7 @@ export default async function isAuth(req, res, next) {
   try {
     const tokenFromClient = req.headers.authorization.replace('Bearer ', '');
     const decoded = await verifyToken(tokenFromClient, accessTokenSecret);
-    req.jwtDecoded = decoded;
+    req.user = decoded;
     next();
   } catch (error) {
     return res.status(httpStatus.unauthorized).send({

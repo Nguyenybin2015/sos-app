@@ -41,3 +41,23 @@ export const addNewBankValidation = [
     .withMessage('shortName must is string'),
   body('icon').optional().isString().withMessage('icon must is string'),
 ];
+
+export const updateBankBody = [
+  body('name')
+    .optional()
+    .isString()
+    .withMessage('name must is string'),
+  body('description')
+    .optional()
+    .isString()
+    .withMessage('description must is string'),
+  body('location')
+    .optional()
+    .isString()
+    .withMessage('location must is string'),
+  body('shortName')
+    .optional()
+    .isString()
+    .withMessage('shortName must is string'),
+  body('icon').optional().isString().withMessage('icon must is string'),
+];

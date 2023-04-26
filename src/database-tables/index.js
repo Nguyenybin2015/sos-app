@@ -5,6 +5,7 @@ import {
   profileTable,
   userBank,
 } from '../constants/constants.name-table.js';
+import { userRoles } from '../constants/constant.js';
 
 export default function initSchemaTables() {
   db.schema.hasTable(userTable).then((exists) => {
@@ -14,6 +15,7 @@ export default function initSchemaTables() {
         table.string('name', 250);
         table.string('email', 250);
         table.string('password', 500);
+        table.string('role', 50).defaultTo(userRoles.USER);
         table.timestamp('created_at').notNullable().defaultTo(db.raw('now()'));
         table.timestamp('updated_at').notNullable().defaultTo(db.raw('now()'));
       });

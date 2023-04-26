@@ -12,9 +12,10 @@ export const authMsg = {
   registerAccount: 'Register account success',
   unauthorized: 'unauthorized',
   login: 'Login success',
-  otpRequired: 'Include a valid OTP',
+  optInvalid: 'Otp invalid',
   verifyOtpSuccess: 'Verify otp success',
-  invalidOtp: 'Otp invalid'
+  invalidOtp: 'Otp invalid',
+  notPermisson: 'You are not permission access this api',
 };
 
 export const bankMsg = {
@@ -24,4 +25,8 @@ export const bankMsg = {
   notFound: 'Bank not found',
   existedCode: 'Bank existed already',
   getAllBank: 'Get all banks success',
+  update: 'Update bank success',
+  delete: 'Delete bank success',
+  updateFailed: 'Update bank failed',
+  deleteFailed: 'Delete bank failed'
 };

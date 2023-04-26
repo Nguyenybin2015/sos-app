@@ -7,6 +7,8 @@ import {
   findAllBankService,
   getBankIdService,
   initBankListService,
+  updateBankService,
+  deleteBankService
 } from '../services/bank.service.js';
 
 export async function getBankByIdController(req, res) {
@@ -52,7 +54,31 @@ export async function getListBankController(req, res) {
       responseRequest(res, result, bankMsg.getAllBank);
     }
   } catch (error) {
-    console.log('error', error);
+    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+
+export async function updateBankController(req, res) {
+  try {
+    const { body } = req;
+    const { id } = req.params;
+    const result = await updateBankService(res, id, body);
+    if (!res.headersSent) {
+      responseRequest(res, result, bankMsg.update);
+    }
+  } catch (error) {
+    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+
+export async function deleteBankController(req, res) {
+  try {
+    const { id } = req.params;
+    const result = await deleteBankService(res, id);
+    if (!res.headersSent) {
+      responseRequest(res, result, bankMsg.delete);
+    }
+  } catch (error) {
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }

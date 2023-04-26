@@ -51,7 +51,9 @@ export async function loginService(res, body) {
     encoding: 'base32',
   });
   const accessToken = await generateToken(
-    { id: result.id, name: result.name, email: result.email },
+    {
+      id: result.id, name: result.name, email: result.email, role: result.role
+    },
     process.env.SECRET_TOKEN,
     process.env.TIME_LIFE_TOKEN
   );
@@ -70,7 +72,7 @@ export function verifyOtpService(res, body) {
     token: otpCode,
   });
   if (!verifyToken) {
-    return execptionErrorCommon(res, httpStatus.unauthorized, authMsg.otpRequired);
+    return execptionErrorCommon(res, httpStatus.unauthorized, authMsg.optInvalid);
   }
   return authMsg.verifyOtpSuccess;
 }

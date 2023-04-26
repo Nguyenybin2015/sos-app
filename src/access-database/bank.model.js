@@ -41,3 +41,11 @@ export async function findAllBanks(query) {
     .offset(limit && page ? Number(limit) * (Number(page) - 1) : null);
   return results;
 }
+
+export async function updateBank(id, body) {
+  await db(bankTable).where('id', id).update(body);
+}
+
+export async function deleteBank(id) {
+  await db(bankTable).where('id', id).del();
+}
