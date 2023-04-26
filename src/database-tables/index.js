@@ -3,6 +3,7 @@ import {
   userTable,
   bankTable,
   profileTable,
+  userBank,
 } from '../constants/constants.name-table.js';
 
 export default function initSchemaTables() {
@@ -46,6 +47,31 @@ export default function initSchemaTables() {
           .uuid('userId')
           .references('id')
           .inTable(userTable)
+          .notNullable()
+          .onDelete('cascade');
+        table.timestamp('created_at').notNullable().defaultTo(db.raw('now()'));
+        table.timestamp('updated_at').notNullable().defaultTo(db.raw('now()'));
+      });
+    }
+  });
+
+  db.schema.hasTable(userBank).then((exists) => {
+    if (!exists) {
+      return db.schema.createTable(userBank, (table) => {
+        table.uuid('id').primary().defaultTo(db.raw('(UUID())'));
+        table.string('number_card', 50);
+        table.dateTime('account_opening_date');
+        table.dateTime('expiration_date');
+        table
+          .uuid('userId')
+          .references('id')
+          .inTable(userTable)
+          .notNullable()
+          .onDelete('cascade');
+        table
+          .uuid('bankId')
+          .references('id')
+          .inTable(bankTable)
           .notNullable()
           .onDelete('cascade');
         table.timestamp('created_at').notNullable().defaultTo(db.raw('now()'));
