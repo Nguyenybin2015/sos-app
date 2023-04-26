@@ -14,27 +14,24 @@ export async function findUserProfileByEmail(email) {
   return result[0];
 }
 
-export async function insertNewUser(res, body) {
-  const {
-    name, email, password, gender = '', address = ''
-  } = body;
-  const userBody = {
-    name,
-    email,
-    password,
-  };
-  const profileBody = {
-    gender,
-    address
-  };
+export async function insertNewUser(res, userBody, profileBody) {
   await db.transaction(async (trx) => {
     await db(userTable).insert(userBody);
     const getUser = await findUserByEmail(userBody.email);
     try {
-      await db.insert({ ...profileBody, userId: getUser.id }).into(profileTable).transacting(trx);
+      await db
+        .insert({ ...profileBody, userId: getUser.id })
+        .into(profileTable)
+        .transacting(trx)
+        .then(trx.commit)
+        .catch(trx.rollback);
     } catch (error) {
       await db(userTable).delete().where('id', getUser.id);
-      return execptionErrorCommon(res, httpStatus.serverInterval, userMsg.createProfileError);
+      return execptionErrorCommon(
+        res,
+        httpStatus.serverInterval,
+        userMsg.createProfileError
+      );
     }
   });
 }

@@ -10,13 +10,24 @@ import { generateToken } from '../helpers/jwt.helper.js';
 dotenv.config();
 
 export async function registerAccountService(res, body) {
-  const { email = '', password = '' } = body;
+  const {
+    email = '', password = '', name, gender = '', address = ''
+  } = body;
   const result = await findUserByEmail(email);
   if (result) {
     return execptionErrorCommon(res, httpStatus.conflict, userMsg.conflict);
   }
   const hashPass = await hashPassword(password);
-  await insertNewUser(res, { ...body, password: hashPass });
+  const userBody = {
+    name,
+    email,
+    password: hashPass,
+  };
+  const profileBody = {
+    gender,
+    address,
+  };
+  await insertNewUser(res, userBody, profileBody);
   return true;
 }
 
