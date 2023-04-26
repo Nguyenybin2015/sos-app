@@ -13,6 +13,7 @@ export async function registerAccount(req, res) {
     }
   }
   catch (error) {
+    console.log('err', error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }

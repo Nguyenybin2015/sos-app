@@ -1,19 +1,40 @@
 import { db } from '../configs/configs.db.js';
+import { httpStatus } from '../constants/constants.http-status.code.js';
+import { userMsg } from '../constants/constants.message-response.js';
+import { userTable, profileTable } from '../constants/constants.name-table.js';
+import execptionErrorCommon from '../exceptions/exception.errror-common.js';
 
 export async function findUserByEmail(email) {
-  const result = await db.select('*').from('users').where('email', email);
-  return result;
+  const result = await db.select('*').from(userTable).where('email', email);
+  return result[0];
 }
 
 export async function findUserProfileByEmail(email) {
-  const result = await db.select('*').from('profile_user').where('email', email);
-  return result;
+  const result = await db.select('*').from(userTable).where('email', email);
+  return result[0];
 }
 
-export async function insertNewUser(body) {
-  console.log('This is function add new user');
-}
-
-export async function updateUser(body) {
-  console.log('This is function update user');
+export async function insertNewUser(res, body) {
+  const {
+    name, email, password, gender = '', address = ''
+  } = body;
+  const userBody = {
+    name,
+    email,
+    password,
+  };
+  const profileBody = {
+    gender,
+    address
+  };
+  await db.transaction(async (trx) => {
+    await db(userTable).insert(userBody);
+    const getUser = await findUserByEmail(userBody.email);
+    try {
+      await db.insert({ ...profileBody, userId: getUser.id }).into(profileTable).transacting(trx);
+    } catch (error) {
+      await db(userTable).delete().where('id', getUser.id);
+      return execptionErrorCommon(res, httpStatus.serverInterval, userMsg.createProfileError);
+    }
+  });
 }

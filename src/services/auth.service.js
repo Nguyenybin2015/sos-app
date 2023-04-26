@@ -1,10 +1,9 @@
-/* eslint-disable import/no-unresolved */
 import Speakeasy from 'speakeasy';
 import dotenv from 'dotenv';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { authMsg, userMsg } from '../constants/constants.message-response.js';
 import { hashPassword, comparePassWord } from '../utils/utils.bcrypt.js';
-import { findUserByEmail } from '../access-database/user.model.js';
+import { findUserByEmail, insertNewUser } from '../access-database/user.model.js';
 import execptionErrorCommon from '../exceptions/exception.errror-common.js';
 import { generateToken } from '../helpers/jwt.helper.js';
 
@@ -13,23 +12,21 @@ dotenv.config();
 export async function registerAccountService(res, body) {
   const { email = '', password = '' } = body;
   const result = await findUserByEmail(email);
-  console.log('result', result);
-  if (result.length) {
-    return execptionErrorCommon(res, httpStatus.conflict, authMsg.conflict);
+  if (result) {
+    return execptionErrorCommon(res, httpStatus.conflict, userMsg.conflict);
   }
   const hashPass = await hashPassword(password);
-  console.log('hashPass', hashPass);
-  return result;
+  await insertNewUser(res, { ...body, password: hashPass });
+  return true;
 }
 
 export async function loginService(res, body) {
   const { email = '', password = '' } = body;
   const result = await findUserByEmail(email);
-  const userInfo = result[0];
-  if (!userInfo) {
+  if (!result) {
     return execptionErrorCommon(res, httpStatus.notFound, userMsg.notFound);
   }
-  const userPassword = userInfo.password;
+  const userPassword = result.password;
   const isComparePass = await comparePassWord(password, userPassword);
   if (!isComparePass) {
     return execptionErrorCommon(
@@ -43,12 +40,12 @@ export async function loginService(res, body) {
     encoding: 'base32',
   });
   const accessToken = await generateToken(
-    { id: userInfo.id, name: userInfo.name, email: userInfo.email },
+    { id: result.id, name: result.name, email: result.email },
     process.env.SECRET_TOKEN,
     process.env.TIME_LIFE_TOKEN
   );
   return {
-    ...userInfo,
+    ...result,
     otpCode: token,
     accessToken,
   };

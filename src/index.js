@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import { serverMsg } from './constants/constants.message-response.js';
 import { httpStatus } from './constants/constants.http-status.code.js';
 import indexRouters from './routes/index.js';
-import initSchemaTables from './databases/index.js';
+import initSchemaTables from './database-tables/index.js';
 
 dotenv.config();
 

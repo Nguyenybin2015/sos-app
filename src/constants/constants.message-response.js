@@ -1,8 +1,9 @@
 export const serverMsg = 'Interval server error';
 
 export const userMsg = {
-  conflict: 'This user is already in use!',
+  conflict: 'This user is already',
   notFound: 'User not found',
+  createProfileError: 'Can not create user profile',
 };
 
 export const authMsg = {
