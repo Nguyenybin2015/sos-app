@@ -15,6 +15,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "csv-parse": "^5.3.8",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
@@ -73,7 +74,10 @@
       "import/named": [
         "off"
       ],
-      "max-len": "off"
+      "max-len": "off",
+      "no-restricted-syntax": "off",
+      "guard-for-in": "off",
+      "no-continue": "off"
     }
   }
 }

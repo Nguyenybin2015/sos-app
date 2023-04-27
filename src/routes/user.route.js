@@ -1,9 +1,12 @@
 import { Router } from 'express';
-import { getUserList } from '../controllers/user.controller.js';
-import { isAuth } from '../middlewares/authen-token.js';
+import {
+  registerAccount,
+} from '../controllers/user.controller.js';
+import { registerValidation } from '../validates/validates.body-request.js';
+import validateResult from '../validates/validates.result.js';
 
 const userRoutes = Router();
 
-userRoutes.get('/:userToken', [isAuth], getUserList);
+userRoutes.post('/register-acount', [...registerValidation, validateResult], registerAccount);
 
 export default userRoutes;
