@@ -13,11 +13,14 @@ export async function registerAccount(req, res) {
     }
   }
   catch (error) {
-    console.log('err', error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }
 
 export function getUsersList(req, res) {
   res.send({ statusCode: 200, mess: 'hello' });
+}
+
+export function updateUserAdmin() {
+  console.log('update admin');
 }

@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(express.static('public'));
 app.use(cors());
 app.use('/api', indexRouters);
 app.use((err, req, res, next) => {

@@ -1,213 +1,247 @@
-/* eslint-disable import/prefer-default-export */
+import dotenv from 'dotenv';
+
+dotenv.config();
+export const urlIcon = process.env.HOST_URL;
+
 export const bankListInfo = [
   {
-    name: 'An Binh Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần An Bình',
+    english_name: 'An Binh Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần An Bình',
     short_name: 'ABB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/abb.jpg`
   },
   {
-    name: 'Asia Commercial Joint-stock Bank - Ngân hàng thương mại cổ phần Á châu',
+    english_name: 'Asia Commercial Joint-stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Á châu',
     short_name: 'ACB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/acb.png`
   },
   {
-    name: 'Vietnam Bank for Agriculture and Rural Development - Agribank - Ngân hàng nông nghiệp và phát triển nông thông Việt Nam',
+    english_name: 'Vietnam Bank for Agriculture and Rural Development - Agribank',
+    vietnamese_name: 'Ngân hàng nông nghiệp và phát triển nông thông Việt Nam',
     short_name: 'AGRIBANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/agribank.jpg`
   },
   {
-    name: 'Bac A Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Bắc Á',
+    english_name: 'Bac A Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Bắc Á',
     short_name: 'BACABANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/bacabank.png`
   },
   {
-    name: 'Joint Stock Commercial Bank for Investment and Development of Vietnam - Ngân hàng thương mại cổ phần đầu tư và phát triển Việt Nam',
+    english_name: 'Joint Stock Commercial Bank for Investment and Development of Vietnam',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần đầu tư và phát triển Việt Nam',
     short_name: 'BID',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/bidv.png`
   },
   {
-    name: 'Vietnam Joint-Stock Commercial Bank for Industry and Trade - Ngân hàng thương mại cổ phần công thương Việt Nam',
+    english_name: 'Vietnam Joint-Stock Commercial Bank for Industry and Trade',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần công thương Việt Nam',
     short_name: 'CTG',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/vietinbank.png`
   },
   {
-    name: 'Vietnam Export Import Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần xuất nhập khẩu Việt Nam',
+    english_name: 'Vietnam Export Import Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần xuất nhập khẩu Việt Nam',
     short_name: 'EIB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/eximbank.jpg`
   },
   {
-    name: 'Ho Chi Minh City Development Joint Stock Commercial Bank - Ngân hàng thương mại cổ phần phát triển TP.HCM',
+    english_name: 'Ho Chi Minh City Development Joint Stock Commercial Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần phát triển TP.HCM',
     short_name: 'HDBANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/hdbank.jpg`
   },
   {
-    name: 'Kien Long Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Kiên Long',
+    english_name: 'Kien Long Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Kiên Long',
     short_name: 'KLB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/kienlong.png`
   },
   {
-    name: 'Lien Viet Post Joint Stock Commercial Bank - Ngân hàng thương mại cổ phần bưu điện Liên Việt',
+    english_name: 'Lien Viet Post Joint Stock Commercial Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần bưu điện Liên Việt',
     short_name: 'LIENVIET',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/lienviet.jpg`
   },
   {
-    name: 'Military Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần quân đội',
+    english_name: 'Military Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần quân đội',
     short_name: 'MBB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/mbb.jpg`
   },
   {
-    name: 'Vietnam Maritime Commercial Stock Bank - Ngân hàng thương mại cổ phần hàng hải Việt Nam',
+    english_name: 'Vietnam Maritime Commercial Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần hàng hải Việt Nam',
     short_name: 'MSB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/msb.jpg`
   },
   {
-    name: 'Nam A Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Nam Á',
+    english_name: 'Nam A Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Nam Á',
     short_name: 'NAMA',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/nama.jpg`
   },
   {
-    name: 'National Citizen Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần quốc dân',
+    english_name: 'National Citizen Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần quốc dân',
     short_name: 'NCB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/ncb.jpg`
   },
   {
-    name: 'Orient Commercial Joint Stock Bank-Ngan Hang Thuong Mai Co Phan Phuong Dong - Ngân hàng thương mại cổ phần Phương Đông',
+    english_name: 'Orient Commercial Joint Stock Bank-Ngan Hang Thuong Mai Co Phan Phuong Dong',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Phương Đông',
     short_name: 'OCB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/ocb.png`
   },
   {
-    name: 'Petrolimex Group Commercial Joint Stock Bank (The) - Ngân hàng thương mại cổ phần xăng dầu PETROLIMEX',
+    english_name: 'Petrolimex Group Commercial Joint Stock Bank (The)',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần xăng dầu PETROLIMEX',
     short_name: 'PGBANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/pgbank.jpg`
   },
   {
-    name: 'Vietnam Public Joint Stock Commercial Bank - Ngân hàng thương mại cổ phần đại chúng Việt Nam',
+    english_name: 'Vietnam Public Joint Stock Commercial Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần đại chúng Việt Nam',
     short_name: 'PVCOMBANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/pvcombank.png`
   },
   {
-    name: 'Sai Gon Joint Stock Commercial Bank - Ngân hàng thương mại cổ phần Sài Gòn',
+    english_name: 'Sai Gon Joint Stock Commercial Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Sài Gòn',
     short_name: 'SCB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/scbank.png`
   },
   {
-    name: 'Southeast Asia Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Đông Nam Á',
+    english_name: 'Southeast Asia Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Đông Nam Á',
     short_name: 'SEABANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/seabank.png`
   },
   {
-    name: 'Saigon Bank for Industry and Trade - Ngân hàng thương mại cổ phần Sài Gòn công thương',
+    english_name: 'Saigon Bank for Industry and Trade',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Sài Gòn công thương',
     short_name: 'SGB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/saigonbank.png`
   },
   {
-    name: 'Saigon - Hanoi Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Sài Gòn - Hà Nội',
+    english_name: 'Saigon - Hanoi Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Sài Gòn - Hà Nội',
     short_name: 'SHB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/shbank.jpg`
   },
   {
-    name: 'Saigon Thuong Tin Commercial Joint-Stock Bank- SACOMBANK - Ngân hàng thương mại cổ phần Sài Gòn thương tín',
+    english_name: 'Saigon Thuong Tin Commercial Joint-Stock Bank- SACOMBANK',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Sài Gòn thương tín',
     short_name: 'STB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/sacombank.jpg`
   },
   {
-    name: 'Vietnam Technological and Commercial Joint-Stock Bank - Ngân hàng thương mại cổ phần kỹ thương Việt Nam',
+    english_name: 'Vietnam Technological and Commercial Joint-Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần kỹ thương Việt Nam',
     short_name: 'TCB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/techcombank.jpg`
   },
   {
-    name: 'Tien Phong Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Tiên Phong',
+    english_name: 'Tien Phong Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Tiên Phong',
     short_name: 'TPB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/tienphongbank.jpg`
   },
   {
-    name: 'Joint Stock Commercial Bank for Foreign Trade of Vietnam- VIETCOMBANK - Ngân hàng thương mại cổ phần ngoại thương Việt Nam',
+    english_name: 'Joint Stock Commercial Bank for Foreign Trade of Vietnam- VIETCOMBANK',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần ngoại thương Việt Nam',
     short_name: 'VCB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/vietcombank.jpg`
   },
   {
-    name: 'VietNam International Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần quốc tế Việt Nam',
+    english_name: 'VietNam International Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần quốc tế Việt Nam',
     short_name: 'VIB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/vibank.jpg`
   },
   {
-    name: 'Vietnam Asia Commercial Joint - Ngân hàng thương mại cổ phần Việt Á',
+    english_name: 'Vietnam Asia Commercial Joint',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Việt Á',
     short_name: 'VIETABANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/vietabank.png`
   },
   {
-    name: 'Viet Capital Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Bản Việt',
+    english_name: 'Viet Capital Commercial Joint Stock Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Bản Việt',
     short_name: 'VIETCAPITALBANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/vietcapital.jpg`
   },
   {
-    name: 'Vietnam Prosperity Joint Stock Commercial Bank - Ngân hàng thương mại cổ phần Việt Nam thịnh vượng',
+    english_name: 'Vietnam Prosperity Joint Stock Commercial Bank',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Việt Nam thịnh vượng',
     short_name: 'VPB',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/vpbank.jpg`
   },
   {
-    name: 'Vietnam Thuong Tin Commercial Joint Stock Bank - Ngân hàng thương mại cổ phần Việt Nam Thương Tín',
+    english_name: 'Vietnam Thuong Tin Commercial Joint Stock Bank',
+    vietnamese_nameL: 'Ngân hàng thương mại cổ phần Việt Nam Thương Tín',
     short_name: 'VIETBANK',
     description: '',
     location: '',
-    icon: ''
+    icon: `${urlIcon}/vietbank.jpg`
   }
 ];

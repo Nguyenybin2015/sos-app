@@ -3,7 +3,6 @@ import { bankMsg, serverMsg } from '../constants/constants.message-response.js';
 import execptionErrorCommon from '../exceptions/exception.errror-common.js';
 import responseRequest from '../utils/utils.response.js';
 import {
-  addNewBankService,
   findAllBankService,
   getBankIdService,
   initBankListService,
@@ -17,18 +16,6 @@ export async function getBankByIdController(req, res) {
     const result = await getBankIdService(res, id);
     if (!res.headersSent) {
       responseRequest(res, result, bankMsg.getById);
-    }
-  } catch (error) {
-    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
-  }
-}
-
-export async function addNewBankController(req, res) {
-  try {
-    const { body } = req;
-    const result = await addNewBankService(res, body);
-    if (!res.headersSent) {
-      responseRequest(res, result, bankMsg.addNew);
     }
   } catch (error) {
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
@@ -54,6 +41,7 @@ export async function getListBankController(req, res) {
       responseRequest(res, result, bankMsg.getAllBank);
     }
   } catch (error) {
+    console.log('error0', error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }

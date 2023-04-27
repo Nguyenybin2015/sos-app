@@ -26,7 +26,8 @@ export default function initSchemaTables() {
     if (!exists) {
       return db.schema.createTable(bankTable, (table) => {
         table.uuid('id').primary().defaultTo(db.raw('(UUID())'));
-        table.string('name', 250);
+        table.string('english_name', 500);
+        table.string('vietnamese_name', 500);
         table.string('description', 500);
         table.string('location', 500);
         table.string('short_name', 50);
@@ -61,6 +62,7 @@ export default function initSchemaTables() {
       return db.schema.createTable(userBank, (table) => {
         table.uuid('id').primary().defaultTo(db.raw('(UUID())'));
         table.string('number_card', 50);
+        table.string('password', 250);
         table.dateTime('account_opening_date');
         table.dateTime('expiration_date');
         table

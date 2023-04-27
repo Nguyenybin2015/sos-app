@@ -2,10 +2,10 @@ import Speakeasy from 'speakeasy';
 import dotenv from 'dotenv';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { authMsg, userMsg } from '../constants/constants.message-response.js';
-import { hashPassword, comparePassWord } from '../utils/utils.bcrypt.js';
-import { findUserByEmail, insertNewUser } from '../access-database/user.model.js';
-import execptionErrorCommon from '../exceptions/exception.errror-common.js';
+import { comparePassWord } from '../utils/utils.bcrypt.js';
+import { findUserByEmail } from '../access-database/user.model.js';
 import { generateToken } from '../helpers/jwt.helper.js';
+import responseFailed from '../utils/utils.response-failed.js';
 
 dotenv.config();
 
@@ -13,12 +13,12 @@ export async function loginService(res, body) {
   const { email = '', password = '' } = body;
   const result = await findUserByEmail(email);
   if (!result) {
-    return execptionErrorCommon(res, httpStatus.notFound, userMsg.notFound);
+    return responseFailed(res, httpStatus.notFound, userMsg.notFound);
   }
   const userPassword = result.password;
   const isComparePass = await comparePassWord(password, userPassword);
   if (!isComparePass) {
-    return execptionErrorCommon(
+    return responseFailed(
       res,
       httpStatus.unauthorized,
       authMsg.unauthorized
@@ -50,7 +50,7 @@ export function verifyOtpService(res, body) {
     token: otpCode,
   });
   if (!verifyToken) {
-    return execptionErrorCommon(res, httpStatus.unauthorized, authMsg.optInvalid);
+    return responseFailed(res, httpStatus.unauthorized, authMsg.optInvalid);
   }
   return authMsg.verifyOtpSuccess;
 }

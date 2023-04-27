@@ -19,29 +19,6 @@ export const verifyOtpValidation = [
   body('otpCode').exists().withMessage('otpCode is required'),
 ];
 
-export const addNewBankValidation = [
-  body('name')
-    .exists()
-    .withMessage('name is required')
-    .isString()
-    .withMessage('name must is string'),
-  body('description')
-    .optional()
-    .isString()
-    .withMessage('description must is string'),
-  body('location')
-    .exists()
-    .withMessage('location is required')
-    .isString()
-    .withMessage('location must is string'),
-  body('shortName')
-    .exists()
-    .withMessage('shortName is required')
-    .isString()
-    .withMessage('shortName must is string'),
-  body('icon').optional().isString().withMessage('icon must is string'),
-];
-
 export const updateBankBody = [
   body('name')
     .optional()

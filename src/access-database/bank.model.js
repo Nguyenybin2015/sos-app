@@ -12,10 +12,6 @@ export async function findBankByCollunm(colunm, value) {
   return result[0];
 }
 
-export async function inserNewBank(body) {
-  await db.insert(body).into(bankTable);
-}
-
 export async function initMultiBank() {
   for await (const bank of bankListInfo) {
     const existedBank = await findBankByCollunm('short_name', bank.short_name);
@@ -34,7 +30,8 @@ export async function findAllBanks(query) {
       if (searchKey) {
         queryBuilder
           .where('short_name', 'like', `%${searchKey}%`)
-          .orWhere('name', 'like', `%${searchKey}%`);
+          .orWhere('vietnamese_name', 'like', `%${searchKey}%`)
+          .orWhere('english_name', 'like', `%${searchKey}%`);
       }
     })
     .limit(limit && page ? Number(limit) : null)
