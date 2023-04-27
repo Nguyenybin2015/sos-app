@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.0",
     "knex": "^2.4.2",
     "mysql": "^2.18.1",
+    "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
     "speakeasy": "^2.0.0",
     "twilio": "^4.10.0"
@@ -37,13 +38,21 @@
       "browser": true
     },
     "rules": {
-      "linebreak-style": ["off"],
+      "linebreak-style": [
+        "off"
+      ],
       "import/extensions": [
         "off"
       ],
-      "consistent-return": ["off"],
-      "no-param-reassign": ["off"],
-      "no-console": ["off"],
+      "consistent-return": [
+        "off"
+      ],
+      "no-param-reassign": [
+        "off"
+      ],
+      "no-console": [
+        "off"
+      ],
       "brace-style": [
         "off",
         "stroustrup"
@@ -61,7 +70,9 @@
       "one-var": [
         "off"
       ],
-      "import/named": ["off"],
+      "import/named": [
+        "off"
+      ],
       "max-len": "off"
     }
   }
