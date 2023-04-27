@@ -29,6 +29,7 @@ export async function initBanksController(req, res) {
       responseRequest(res, result, bankMsg.initBanks);
     }
   } catch (error) {
+    console.log(error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }

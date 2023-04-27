@@ -238,7 +238,7 @@ export const bankListInfo = [
   },
   {
     english_name: 'Vietnam Thuong Tin Commercial Joint Stock Bank',
-    vietnamese_nameL: 'Ngân hàng thương mại cổ phần Việt Nam Thương Tín',
+    vietnamese_name: 'Ngân hàng thương mại cổ phần Việt Nam Thương Tín',
     short_name: 'VIETBANK',
     description: '',
     location: '',
