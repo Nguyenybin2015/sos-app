@@ -1,19 +1,43 @@
 import { db } from '../configs/configs.db.js';
+import { httpStatus } from '../constants/constants.http-status.code.js';
+import { userMsg } from '../constants/constants.message-response.js';
+import { userTable, profileTable, userBank } from '../constants/constants.name-table.js';
+import responseFailed from '../utils/utils.response-failed.js';
 
 export async function findUserByEmail(email) {
-  const result = await db.select('*').from('users').where('email', email);
-  return result;
+  const result = await db.select('*').from(userTable).where('email', email);
+  return result[0];
 }
 
 export async function findUserProfileByEmail(email) {
-  const result = await db.select('*').from('profile_user').where('email', email);
-  return result;
+  const result = await db.select('*').from(userTable).where('email', email);
+  return result[0];
 }
 
-export async function insertNewUser(body) {
-  console.log('This is function add new user');
+export async function insertNewUser(res, userBody, profileBody) {
+  let getUser = {};
+  await db.transaction(async (trx) => {
+    await db(userTable).insert(userBody);
+    getUser = await findUserByEmail(userBody.email);
+    try {
+      await db
+        .insert({ ...profileBody, userId: getUser.id })
+        .into(profileTable)
+        .transacting(trx)
+        .then(trx.commit)
+        .catch(trx.rollback);
+    } catch (error) {
+      await db(userTable).delete().where('id', getUser.id);
+      return responseFailed(
+        res,
+        httpStatus.serverInterval,
+        userMsg.createProfileError
+      );
+    }
+  });
+  return getUser;
 }
 
-export async function updateUser(body) {
-  console.log('This is function update user');
+export async function createUserBank(body) {
+  await db(userBank).insert(body);
 }
