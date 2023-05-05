@@ -8,7 +8,11 @@ import { httpStatus } from '../constants/constants.http-status.code.js';
 import { serverMsg } from '../constants/constants.message-response.js';
 
 export function addBankUser(req, res) {
-  addBankService(res, req.body.userID, req.body.bankID);
+  if (req.body.userID || req.body.bankID) {
+    addBankService(res, req.body.userID, req.body.bankID);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
 }
 
 export function getBankConditionController(req, res) {
