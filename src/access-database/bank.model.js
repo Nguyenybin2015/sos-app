@@ -1,6 +1,7 @@
 import { db } from '../configs/configs.db.js';
 import { bankTable } from '../constants/constants.name-table.js';
 import { bankListInfo } from '../constants/constants.bank-list.js';
+import generateUUID from '../utils/generate-uuid.js';
 
 export async function findBankById(id) {
   const result = await db.select('*').from(bankTable).where('id', id);
@@ -18,7 +19,8 @@ export async function initMultiBank() {
     if (existedBank) {
       continue;
     }
-    await db(bankTable).insert(bank);
+    const bankBody = { ...bank, id: generateUUID() };
+    await db(bankTable).insert(bankBody);
   }
 }
 

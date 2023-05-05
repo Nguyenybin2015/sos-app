@@ -1,7 +1,7 @@
 import { db } from '../configs/configs.db.js';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { userMsg } from '../constants/constants.message-response.js';
-import { userTable, profileTable, userBank } from '../constants/constants.name-table.js';
+import { userTable, profileTable } from '../constants/constants.name-table.js';
 import responseFailed from '../utils/utils.response-failed.js';
 
 export async function findUserByEmail(email) {
@@ -38,6 +38,7 @@ export async function insertNewUser(res, userBody, profileBody) {
   return getUser;
 }
 
-export async function createUserBank(body) {
-  await db(userBank).insert(body);
+export async function findUserById(id) {
+  const result = await db.select('*').from(userTable).where('id', id);
+  return result[0];
 }

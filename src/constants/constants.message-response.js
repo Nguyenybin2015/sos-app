@@ -31,3 +31,12 @@ export const bankMsg = {
   updateFailed: 'Update bank failed',
   deleteFailed: 'Delete bank failed'
 };
+
+export const userBankMsg = {
+  addUBSuccess: 'Add bank success',
+  addUBFail: 'Add bank fail',
+  userBankNotFound: 'User bank not found',
+  getSuccess: 'Get success',
+  noHaveChange: 'Not have change',
+  updateSuccess: 'Update success'
+};

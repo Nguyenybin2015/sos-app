@@ -10,12 +10,28 @@ export default async function isAuth(req, res, next) {
   try {
     const tokenFromClient = req.headers.authorization.replace('Bearer ', '');
     const decoded = await verifyToken(tokenFromClient, accessTokenSecret);
+    // console.log('hhhh', decoded);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(httpStatus.ok).send({
+    res.status(httpStatus.ok).send({
       message: authMsg.unauthorized,
       stausCode: httpStatus.unauthorized,
     });
   }
 }
+
+// export default async function isAuth(req, res, next) {
+//   try {
+//     const tokenFromClient = req.headers.authorization.replace('Bearer ', '');
+//     const decoded = await verifyToken(tokenFromClient, accessTokenSecret);
+//     console.log('hhh', decoded);
+//     req.user = decoded;
+//     next();
+//   } catch (error) {
+//     return res.status(httpStatus.ok).send({
+//       message: authMsg.unauthorized,
+//       stausCode: httpStatus.unauthorized,
+//     });
+//   }
+// }

@@ -11,8 +11,8 @@ export const registerValidation = [
   body('password')
     .exists()
     .withMessage('password is required')
-    .isLength({ min: 6, max: 20 })
-    .withMessage('password must is > 5 and < 20 character'),
+    .isLength({ min: 6 })
+    .withMessage('password must is > 5'),
 ];
 
 export const verifyOtpValidation = [

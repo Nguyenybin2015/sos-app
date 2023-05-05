@@ -27,6 +27,9 @@ export async function loginService(res, body) {
   const token = Speakeasy.totp({
     secret: process.env.SECRET_OTP_TOKEN,
     encoding: 'base32',
+    digits: 6,
+    step: 60,
+    window: 10,
   });
   const accessToken = await generateToken(
     {
@@ -35,6 +38,10 @@ export async function loginService(res, body) {
     process.env.SECRET_TOKEN,
     process.env.TIME_LIFE_TOKEN
   );
+  // var accessToken = jwt.sign({ foo: id }, process.env.SECRET_TOKEN);
+  // const accessToken = await generateToken({
+  //   id: result.id
+  // }, process.env.SECRET_TOKEN);
   return {
     ...result,
     otpCode: token,
@@ -48,6 +55,8 @@ export function verifyOtpService(res, body) {
     secret: process.env.SECRET_OTP_TOKEN,
     encoding: 'base32',
     token: otpCode,
+    step: 60,
+    window: 10,
   });
   if (!verifyToken) {
     return responseFailed(res, httpStatus.unauthorized, authMsg.optInvalid);

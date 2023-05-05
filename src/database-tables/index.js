@@ -16,6 +16,8 @@ export default function initSchemaTables() {
         table.string('email', 250);
         table.string('password', 500);
         table.string('role', 50).defaultTo(userRoles.USER);
+        table.boolean('maintenance').defaultTo(0);
+        table.boolean('close_system').defaultTo(0);
         table.timestamp('created_at').notNullable().defaultTo(db.raw('now()'));
         table.timestamp('updated_at').notNullable().defaultTo(db.raw('now()'));
       });
@@ -62,7 +64,9 @@ export default function initSchemaTables() {
       return db.schema.createTable(userBank, (table) => {
         table.uuid('id').primary().defaultTo(db.raw('(UUID())'));
         table.string('number_card', 50);
-        table.string('password', 250);
+        // table.string('password', 250);
+        table.boolean('lock_deposits').notNullable().defaultTo(0);
+        table.boolean('lock_withdrawals').notNullable().defaultTo(0);
         table.dateTime('account_opening_date');
         table.dateTime('expiration_date');
         table

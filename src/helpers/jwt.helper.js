@@ -17,6 +17,9 @@ export function generateToken(payload, keySecret, time) {
     );
   });
 }
+// export function generateToken(id, secretKey) {
+//   jwt.sign({ foo: id }, secretKey);
+// }
 
 export function verifyToken(token, keySecret) {
   return new Promise((resolve, reject) => {

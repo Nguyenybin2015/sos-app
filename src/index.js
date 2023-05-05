@@ -13,7 +13,9 @@ dotenv.config();
 
 const app = express();
 initSchemaTables();
-initAdmin();
+setTimeout(async () => {
+  await initAdmin();
+}, 200);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
