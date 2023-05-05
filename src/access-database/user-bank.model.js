@@ -26,9 +26,7 @@ export async function getUserBankCondition(res, userID, bankID) {
     .select('id', 'lock_deposits', 'lock_withdrawals', 'userId', 'bankId')
     .from(userBank)
     .where('userId', userID);
-  console.log(result);
   if (!result.length) {
-    console.log('result not found');
     responseFailed(res, httpStatus.notFound, userBankMsg.userBankNotFound);
   } else {
     responseRequest(res, result, userBankMsg.getSuccess);

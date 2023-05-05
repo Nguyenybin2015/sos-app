@@ -5,6 +5,10 @@ export const userMsg = {
   notFound: 'User not found',
   createProfileError: 'Can not create user profile',
   getById: 'Get user by id success',
+  getSuccess: 'Get condition app success',
+  getFail: 'Get condition app fail',
+  updateSuccess: 'Update condition app success',
+  updateFail: 'Update condition app fail',
 };
 
 export const authMsg = {

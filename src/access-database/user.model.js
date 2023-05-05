@@ -1,8 +1,10 @@
+/* eslint-disable camelcase */
 import { db } from '../configs/configs.db.js';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { userMsg } from '../constants/constants.message-response.js';
 import { userTable, profileTable } from '../constants/constants.name-table.js';
 import responseFailed from '../utils/utils.response-failed.js';
+import responseRequest from '../utils/utils.response.js';
 
 export async function findUserByEmail(email) {
   const result = await db.select('*').from(userTable).where('email', email);
@@ -41,4 +43,29 @@ export async function insertNewUser(res, userBody, profileBody) {
 export async function findUserById(id) {
   const result = await db.select('*').from(userTable).where('id', id);
   return result[0];
+}
+
+export async function getUserBankCondition(id) {
+  const result = await db
+    .select('id', 'maintenance', 'close_system')
+    .from(userTable)
+    .where('id', id);
+  return result[0];
+}
+
+export async function updateUserBankCondition(res, body) {
+  console.log(body);
+  const { id, maintenance, close_system } = body;
+  if (body.maintenance != null || body.close_system != null) {
+    await db(userTable)
+      .where('id', id)
+      .update({ maintenance, close_system });
+    const result = await db
+      .select('id', 'maintenance', 'close_system')
+      .from(userTable)
+      .where('id', id);
+    responseRequest(res, result, userMsg.updateSuccess);
+  } else {
+    responseFailed(res, httpStatus.noContent, userMsg.updateFail);
+  }
 }
