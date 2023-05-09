@@ -58,8 +58,9 @@ export function verifyOtpService(res, body) {
     step: 60,
     window: 10,
   });
-  if (!verifyToken) {
-    return responseFailed(res, httpStatus.unauthorized, authMsg.optInvalid);
-  }
-  return authMsg.verifyOtpSuccess;
+  return verifyToken;
+  // if (!verifyToken) {
+  //   return false;
+  // }
+  // return true;
 }
