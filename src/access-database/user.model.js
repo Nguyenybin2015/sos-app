@@ -46,10 +46,12 @@ export async function findUserById(id) {
 }
 
 export async function getUserBankCondition(id) {
+  console.log(id);
   const result = await db
     .select('id', 'maintenance', 'close_system')
     .from(userTable)
     .where('id', id);
+  console.log(result);
   return result[0];
 }
 

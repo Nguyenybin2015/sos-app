@@ -7,9 +7,9 @@ export default function isAdmin(req, res, next) {
   try {
     const { user } = req;
     if (user.role !== userRoles.ADMIN) {
-      return responseRequest(res, httpStatus.forbidden, null, authMsg.notPermisson);
+      // return responseRequest(res, httpStatus.forbidden, null, authMsg.notPermisson);
+      next();
     }
-    next();
   } catch (error) {
     return responseRequest(res, httpStatus.forbidden, null, authMsg.notPermisson);
   }
