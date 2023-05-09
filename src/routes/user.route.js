@@ -9,6 +9,7 @@ import checkOTP from '../middlewares/check-otp.js';
 const userRoutes = Router();
 
 userRoutes.get('/get-app-user-condition', [isAuth], userControllerJs.getAppCondition);
+userRoutes.put('/update-user-profile', [isAuth], userControllerJs.updateUserProfile);
 userRoutes.put('/update-app-user-condition', [isAuth, checkOTP], userControllerJs.updateAppCondition);
 userRoutes.get('/:id', [isAuth, isAdmin], userControllerJs.getUserById);
 userRoutes.post(

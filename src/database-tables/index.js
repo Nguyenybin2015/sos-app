@@ -42,7 +42,7 @@ export default function initSchemaTables() {
         (table) => {
           table.uuid('id').primary().defaultTo(db.raw('(UUID())'));
           table.string('avatar', 250);
-          table.string('gender', 250);
+          table.string('phoneNumber', 20);
           table.string('address', 500);
           table
             .uuid('userId')

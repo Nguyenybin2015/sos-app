@@ -50,3 +50,10 @@ export function updateAppCondition(req, res) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+export function updateUserProfile(req, res) {
+  if (req.body) {
+    userServiceJs.updateUserProfileService(res, req.body);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}

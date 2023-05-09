@@ -56,3 +56,11 @@ export async function updateAppConditionService(res, body) {
   }
   return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
 }
+export async function updateUserProfileService(res, body) {
+  if (body) {
+    console.log(body);
+    await userModelJs.updateUserProfileModel(res, body);
+    return true;
+  }
+  return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
+}
