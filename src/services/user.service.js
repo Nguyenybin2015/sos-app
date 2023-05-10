@@ -19,11 +19,11 @@ export async function registerAccountService(res, body) {
     email,
     password: hashPass,
   };
-  const profileBody = {
-    gender,
-    address,
-  };
-  const newUser = await userModelJs.insertNewUser(res, userBody, profileBody);
+  // const profileBody = {
+  //   gender,
+  //   address,
+  // };
+  const newUser = await userModelJs.insertNewUser(res, userBody);
   return newUser;
 }
 

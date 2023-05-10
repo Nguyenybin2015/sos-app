@@ -11,7 +11,7 @@ const userRoutes = Router();
 userRoutes.get('/get-app-user-condition', [isAuth], userControllerJs.getAppCondition);
 userRoutes.put('/update-user-profile', [isAuth], userControllerJs.updateUserProfile);
 userRoutes.put('/update-app-user-condition', [isAuth, checkOTP], userControllerJs.updateAppCondition);
-userRoutes.get('/:id', [isAuth, isAdmin], userControllerJs.getUserById);
+userRoutes.get('/:id', [isAuth], userControllerJs.getUserById);
 userRoutes.post(
   '/register-acount',
   [...validatesBodyRequestJs.registerValidation, validateResult],

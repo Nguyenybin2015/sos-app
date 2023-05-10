@@ -19,7 +19,7 @@ export async function initMultiBank() {
     if (existedBank) {
       continue;
     }
-    const bankBody = { ...bank, id: generateUUID() };
+    const bankBody = { ...bank };
     await db(bankTable).insert(bankBody);
   }
 }
