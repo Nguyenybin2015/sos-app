@@ -58,3 +58,31 @@ export function updateUserProfile(req, res) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+export function onSystemController(req, res) {
+  if (req.body) {
+    userServiceJs.onSystemService(res, req.body);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+export function offSystemController(req, res) {
+  if (req.body) {
+    userServiceJs.offSystemService(res, req.body);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+export function onMaintenanceController(req, res) {
+  if (req.body) {
+    userServiceJs.onMaintenanceService(res, req.body);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+export function offMaintenanceController(req, res) {
+  if (req.body) {
+    userServiceJs.offMaintenanceService(res, req.body);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}

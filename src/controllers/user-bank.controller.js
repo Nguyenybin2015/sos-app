@@ -22,3 +22,15 @@ export function getBankConditionController(req, res) {
 export function updateBankConditionController(req, res) {
   userBankServiceJs.updateBankConditionService(res, req.body);
 }
+export function onBankConditionController(req, res) {
+  userBankServiceJs.onBankDepositService(res, req.body);
+}
+export function offBankConditionController(req, res) {
+  userBankServiceJs.offBankDepositService(res, req.body);
+}
+export function onBankWithdrawalsController(req, res) {
+  userBankServiceJs.onBankWithdrawalsService(res, req.body);
+}
+export function offBankWithdrawalsController(req, res) {
+  userBankServiceJs.offBankWithdrawalsService(res, req.body);
+}

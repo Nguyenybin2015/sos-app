@@ -91,3 +91,39 @@ export async function updateUserProfileModel(res, body) {
   const result = findUserById(id);
   responseRequest(res, result, userMsg.updateSuccess);
 }
+export async function onSystemModel(res, body) {
+  const { id } = body;
+  await db(constantsNameTableJs.userTable).where('id', id).update('close_system', 0);
+  const result = await db
+    .select('id', 'close_system')
+    .from(constantsNameTableJs.userTable)
+    .where('id', id);
+  responseRequest(res, result, userMsg.updateSuccess);
+}
+export async function offSystemModel(res, body) {
+  const { id } = body;
+  await db(constantsNameTableJs.userTable).where('id', id).update('close_system', 1);
+  const result = await db
+    .select('id', 'close_system')
+    .from(constantsNameTableJs.userTable)
+    .where('id', id);
+  responseRequest(res, result, userMsg.updateSuccess);
+}
+export async function onMaintanenceModel(res, body) {
+  const { id } = body;
+  await db(constantsNameTableJs.userTable).where('id', id).update('maintenance', 1);
+  const result = await db
+    .select('id', 'maintenance')
+    .from(constantsNameTableJs.userTable)
+    .where('id', id);
+  responseRequest(res, result, userMsg.updateSuccess);
+}
+export async function offMaintanenceModel(res, body) {
+  const { id } = body;
+  await db(constantsNameTableJs.userTable).where('id', id).update('maintenance', 0);
+  const result = await db
+    .select('id', 'maintenance')
+    .from(constantsNameTableJs.userTable)
+    .where('id', id);
+  responseRequest(res, result, userMsg.updateSuccess);
+}

@@ -64,3 +64,35 @@ export async function updateUserProfileService(res, body) {
   }
   return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
 }
+export async function onSystemService(res, body) {
+  if (body) {
+    // console.log(body);
+    await userModelJs.onSystemModel(res, body);
+    return true;
+  }
+  return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
+}
+export async function offSystemService(res, body) {
+  if (body) {
+    console.log(body);
+    await userModelJs.offSystemModel(res, body);
+    return true;
+  }
+  return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
+}
+export async function onMaintenanceService(res, body) {
+  if (body) {
+    console.log(body);
+    await userModelJs.onMaintanenceModel(res, body);
+    return true;
+  }
+  return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
+}
+export async function offMaintenanceService(res, body) {
+  if (body) {
+    console.log(body);
+    await userModelJs.offMaintanenceModel(res, body);
+    return true;
+  }
+  return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
+}
