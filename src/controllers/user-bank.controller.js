@@ -12,7 +12,7 @@ export function addBankUser(req, res) {
 }
 
 export function getBankConditionController(req, res) {
-  console.log(req);
+  // console.log(req);
   if (req.body.userID) {
     userBankServiceJs.getBankConditionService(res, req.body.userID);
   } else {

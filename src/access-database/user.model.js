@@ -53,17 +53,16 @@ export async function findUserById(id) {
 }
 
 export async function getUserBankCondition(id) {
-  console.log(id);
+  // console.log(id);
   const result = await db
     .select('id', 'maintenance', 'close_system')
     .from(constantsNameTableJs.userTable)
     .where('id', id);
-  console.log(result);
   return result[0];
 }
 
 export async function updateUserBankCondition(res, body) {
-  console.log(body);
+  // console.log(body);
   const { id, maintenance, close_system } = body;
   if (body.maintenance != null || body.close_system != null) {
     await db(constantsNameTableJs.userTable).where('id', id).update({ maintenance, close_system });
@@ -85,9 +84,9 @@ export async function updateUserProfileModel(res, body) {
     await db(constantsNameTableJs.profileTable).where('userId', id).update({ avatar, phoneNumber });
   }
   else if (body.name != null) {
-    console.log(body.name);
+    // console.log(body.name);
     const a = await db(constantsNameTableJs.userTable).where('id', id).update({ name });
-    console.log(a);
+    // console.log(a);
   }
   else {
     responseFailed(res, httpStatus.noContent, userMsg.updateFail);

@@ -23,7 +23,6 @@ export async function getBankByIdController(req, res) {
 }
 
 export async function initBanksController(req, res) {
-  console.log('hhhh', req);
   try {
     const result = await initBankListService();
     if (!res.headersSent) {
