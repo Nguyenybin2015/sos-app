@@ -96,3 +96,10 @@ export async function offMaintenanceService(res, body) {
   }
   return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
 }
+export async function getUserStateService(res, body) {
+  const result = await userModelJs.getUserServiceCondition(body);
+  if (!result) {
+    return responseFailed(res, httpStatus.notFound);
+  }
+  return result;
+}

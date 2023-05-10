@@ -7,12 +7,18 @@ import responseFailed from '../utils/utils.response-failed.js';
 import responseRequest from '../utils/utils.response.js';
 
 export async function findUserByEmail(email) {
-  const result = await db.select('*').from(constantsNameTableJs.userTable).where('email', email);
+  const result = await db
+    .select('*')
+    .from(constantsNameTableJs.userTable)
+    .where('email', email);
   return result[0];
 }
 
 export async function findUserProfileByEmail(email) {
-  const result = await db.select('*').from(constantsNameTableJs.userTable).where('email', email);
+  const result = await db
+    .select('*')
+    .from(constantsNameTableJs.userTable)
+    .where('email', email);
   return result[0];
 }
 
@@ -41,7 +47,9 @@ export async function insertNewUser(res, userBody, profileBody) {
 }
 
 export async function findUserById(id) {
-  const result = await db.select('*').from(constantsNameTableJs.userTable)
+  const result = await db
+    .select('*')
+    .from(constantsNameTableJs.userTable)
     .innerJoin(
       constantsNameTableJs.profileTable,
       'users.id',
@@ -60,12 +68,13 @@ export async function getUserBankCondition(id) {
     .where('id', id);
   return result[0];
 }
-
 export async function updateUserBankCondition(res, body) {
   // console.log(body);
   const { id, maintenance, close_system } = body;
   if (body.maintenance != null || body.close_system != null) {
-    await db(constantsNameTableJs.userTable).where('id', id).update({ maintenance, close_system });
+    await db(constantsNameTableJs.userTable)
+      .where('id', id)
+      .update({ maintenance, close_system });
     const result = await db
       .select('id', 'maintenance', 'close_system')
       .from(constantsNameTableJs.userTable)
@@ -80,12 +89,14 @@ export async function updateUserProfileModel(res, body) {
     id, avatar, phoneNumber, name, address
   } = body;
   if (body.avatar != null || body.phoneNumber != null || body.address != null) {
-    await db(constantsNameTableJs.profileTable).where('userId', id).update({ avatar, phoneNumber, address });
-  }
-  else if (body.name != null) {
-    const a = await db(constantsNameTableJs.userTable).where('id', id).update({ name });
-  }
-  else {
+    await db(constantsNameTableJs.profileTable)
+      .where('userId', id)
+      .update({ avatar, phoneNumber, address });
+  } else if (body.name != null) {
+    const a = await db(constantsNameTableJs.userTable)
+      .where('id', id)
+      .update({ name });
+  } else {
     responseFailed(res, httpStatus.noContent, userMsg.updateFail);
   }
   const result = findUserById(id);
@@ -93,7 +104,9 @@ export async function updateUserProfileModel(res, body) {
 }
 export async function onSystemModel(res, body) {
   const { id } = body;
-  await db(constantsNameTableJs.userTable).where('id', id).update('close_system', 0);
+  await db(constantsNameTableJs.userTable)
+    .where('id', id)
+    .update('close_system', 0);
   const result = await db
     .select('id', 'close_system')
     .from(constantsNameTableJs.userTable)
@@ -102,7 +115,9 @@ export async function onSystemModel(res, body) {
 }
 export async function offSystemModel(res, body) {
   const { id } = body;
-  await db(constantsNameTableJs.userTable).where('id', id).update('close_system', 1);
+  await db(constantsNameTableJs.userTable)
+    .where('id', id)
+    .update('close_system', 1);
   const result = await db
     .select('id', 'close_system')
     .from(constantsNameTableJs.userTable)
@@ -111,7 +126,9 @@ export async function offSystemModel(res, body) {
 }
 export async function onMaintanenceModel(res, body) {
   const { id } = body;
-  await db(constantsNameTableJs.userTable).where('id', id).update('maintenance', 1);
+  await db(constantsNameTableJs.userTable)
+    .where('id', id)
+    .update('maintenance', 1);
   const result = await db
     .select('id', 'maintenance')
     .from(constantsNameTableJs.userTable)
@@ -120,10 +137,28 @@ export async function onMaintanenceModel(res, body) {
 }
 export async function offMaintanenceModel(res, body) {
   const { id } = body;
-  await db(constantsNameTableJs.userTable).where('id', id).update('maintenance', 0);
+  await db(constantsNameTableJs.userTable)
+    .where('id', id)
+    .update('maintenance', 0);
   const result = await db
     .select('id', 'maintenance')
     .from(constantsNameTableJs.userTable)
     .where('id', id);
   responseRequest(res, result, userMsg.updateSuccess);
+}
+
+export async function getUserServiceCondition(body) {
+  const { id } = body;
+  console.log(id);
+  const result = await db
+    .select('users.*', 'bank_user.lock_deposits', 'bank_user.lock_withdrawals')
+    .from(constantsNameTableJs.userTable)
+    .innerJoin(
+      constantsNameTableJs.userBank,
+      'users.id',
+      '=',
+      'bank_user.userId'
+    )
+    .where('users.id', id);
+  return result[0];
 }

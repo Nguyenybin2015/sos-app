@@ -86,3 +86,13 @@ export function offMaintenanceController(req, res) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+
+export async function getUserStateController(req, res) {
+  // console.log(req);
+  const result = await userServiceJs.getUserStateService(res, req.body);
+  if (req.body) {
+    responseRequest(res, result);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
