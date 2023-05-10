@@ -76,17 +76,14 @@ export async function updateUserBankCondition(res, body) {
   }
 }
 export async function updateUserProfileModel(res, body) {
-  // console.log(body);
   const {
-    id, avatar, phoneNumber, name
+    id, avatar, phoneNumber, name, address
   } = body;
-  if (body.avatar != null || body.phoneNumber != null) {
-    await db(constantsNameTableJs.profileTable).where('userId', id).update({ avatar, phoneNumber });
+  if (body.avatar != null || body.phoneNumber != null || body.address != null) {
+    await db(constantsNameTableJs.profileTable).where('userId', id).update({ avatar, phoneNumber, address });
   }
   else if (body.name != null) {
-    // console.log(body.name);
     const a = await db(constantsNameTableJs.userTable).where('id', id).update({ name });
-    // console.log(a);
   }
   else {
     responseFailed(res, httpStatus.noContent, userMsg.updateFail);

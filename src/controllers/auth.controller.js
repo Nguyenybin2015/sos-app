@@ -39,5 +39,5 @@ export function getOtp(req, res) {
     step: 60,
     window: 10,
   });
-  return res.send(token);
+  return res.send({ otpCode: token });
 }

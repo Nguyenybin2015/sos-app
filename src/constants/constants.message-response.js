@@ -7,8 +7,8 @@ export const userMsg = {
   getById: 'Get user by id success',
   getSuccess: 'Get condition app success',
   getFail: 'Get condition app fail',
-  updateSuccess: 'Update condition app success',
-  updateFail: 'Update condition app fail',
+  updateSuccess: 'Update app success',
+  updateFail: 'Update app fail',
 };
 
 export const authMsg = {
@@ -43,4 +43,8 @@ export const userBankMsg = {
   getSuccess: 'Get success',
   noHaveChange: 'Not have change',
   updateSuccess: 'Update success'
+};
+
+export const p2pMsg = {
+  success: 'Success',
 };
