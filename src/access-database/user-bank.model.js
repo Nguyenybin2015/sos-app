@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable camelcase */
 import { db } from '../configs/configs.db.js';
-import { userBank } from '../constants/constants.name-table.js';
+import { userBank, bankTable } from '../constants/constants.name-table.js';
 import responseFailed from '../utils/utils.response-failed.js';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { userBankMsg } from '../constants/constants.message-response.js';
@@ -21,11 +21,11 @@ export async function createUserBank(res, userID, bankID) {
   }
 }
 
-export async function getUserBankCondition(res, userID, bankID) {
-  const result = await db
-    .select('id', 'lock_deposits', 'lock_withdrawals', 'userId', 'bankId')
-    .from(userBank)
-    .where('userId', userID);
+export async function getUserBankCondition(res, userID) {
+  const result = await db(userBank).innerJoin(bankTable, 'banks.id', '=', 'bank_user.bankId').where('bank_user.userId', userID);
+  // .select('id', 'lock_deposits', 'lock_withdrawals', 'userId', 'bankId')
+  // .from(userBank)
+  // .where('userId', userID);
   if (!result.length) {
     responseFailed(res, httpStatus.notFound, userBankMsg.userBankNotFound);
   } else {
