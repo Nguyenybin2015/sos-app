@@ -58,6 +58,13 @@ export function updateUserProfile(req, res) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+export function updateAvatarProfile(req, res) {
+  if (req) {
+    userServiceJs.updateAvatarProfileService(res, req);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
 export function onSystemController(req, res) {
   if (req.body) {
     userServiceJs.onSystemService(res, req.body);

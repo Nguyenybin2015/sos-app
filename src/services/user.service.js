@@ -64,6 +64,14 @@ export async function updateUserProfileService(res, body) {
   }
   return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
 }
+export async function updateAvatarProfileService(res, body) {
+  if (body) {
+    // console.log(body);
+    await userModelJs.updateAvatar(res, body);
+    return true;
+  }
+  return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
+}
 export async function onSystemService(res, body) {
   if (body) {
     // console.log(body);

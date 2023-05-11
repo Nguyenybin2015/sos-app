@@ -5,6 +5,7 @@ import validateResult from '../validates/validates.result.js';
 import isAuth from '../middlewares/authen-token.js';
 import isAdmin from '../middlewares/check-role.js';
 import checkOTP from '../middlewares/check-otp.js';
+import upload from '../controllers/upload-file.controller.js';
 
 const userRoutes = Router();
 
@@ -21,6 +22,7 @@ userRoutes.post(
   '/register-acount',
   [...validatesBodyRequestJs.registerValidation, validateResult],
   userControllerJs.registerAccount
-); // phan quyen, auth, token
+);
+userRoutes.put('/update-avatar', [isAuth, upload.single('image_avatar')], userControllerJs.updateAvatarProfile);
 
 export default userRoutes;

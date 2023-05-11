@@ -7,8 +7,8 @@ export const userMsg = {
   getById: 'Get user by id success',
   getSuccess: 'Get condition app success',
   getFail: 'Get condition app fail',
-  updateSuccess: 'Update app success',
-  updateFail: 'Update app fail',
+  updateSuccess: 'Update success',
+  updateFail: 'Update fail',
 };
 
 export const authMsg = {

@@ -86,12 +86,12 @@ export async function updateUserBankCondition(res, body) {
 }
 export async function updateUserProfileModel(res, body) {
   const {
-    id, avatar, phoneNumber, name, address
+    id, phoneNumber, name, address
   } = body;
-  if (body.avatar != null || body.phoneNumber != null || body.address != null) {
+  if (body.phoneNumber != null || body.address != null) {
     await db(constantsNameTableJs.profileTable)
       .where('userId', id)
-      .update({ avatar, phoneNumber, address });
+      .update({ phoneNumber, address });
   } else if (body.name != null) {
     const a = await db(constantsNameTableJs.userTable)
       .where('id', id)
@@ -99,7 +99,21 @@ export async function updateUserProfileModel(res, body) {
   } else {
     responseFailed(res, httpStatus.noContent, userMsg.updateFail);
   }
-  const result = findUserById(id);
+  const result = await findUserById(id);
+  responseRequest(res, result, userMsg.updateSuccess);
+}
+export async function updateAvatar(res, body) {
+  const { id } = body.body;
+  const avatar = `/avatar/${body.file.filename}`;
+  if (avatar != null) {
+    await db(constantsNameTableJs.profileTable)
+      .where('userId', id)
+      .update({ avatar });
+  } else {
+    responseFailed(res, httpStatus.noContent, userMsg.updateFail);
+  }
+  const result = await findUserById(id);
+  // console.log(findUserById(id));
   responseRequest(res, result, userMsg.updateSuccess);
 }
 export async function onSystemModel(res, body) {
