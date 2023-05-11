@@ -170,7 +170,7 @@ export const bankListInfo = [
     short_name: 'SHB',
     description: '',
     location: '',
-    icon: `${urlIcon}/shbank.jpg`
+    icon: `${urlIcon}/shbank.png`
   },
   {
     english_name: 'Saigon Thuong Tin Commercial Joint-Stock Bank- SACOMBANK',
@@ -186,7 +186,7 @@ export const bankListInfo = [
     short_name: 'TCB',
     description: '',
     location: '',
-    icon: `${urlIcon}/techcombank.jpg`
+    icon: `${urlIcon}/techcombank.png`
   },
   {
     english_name: 'Tien Phong Commercial Joint Stock Bank',
