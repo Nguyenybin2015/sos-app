@@ -101,24 +101,12 @@ export default function initSchemaTables() {
           .inTable(constantsNameTableJs.userBank)
           .notNullable()
           .onDelete('cascade');
-        // table
-        //   .uuid('locked_by_user')
-        //   .references('userId')
-        //   .inTable(constantsNameTableJs.userBank)
-        //   .notNullable()
-        //   .onDelete('cascade');
         table
           .uuid('user_locked_id')
           .references('id')
           .inTable(constantsNameTableJs.userTable)
           .notNullable()
           .onDelete('cascade');
-        // table
-        //   .uuid('bank_id')
-        //   .references('bankId')
-        //   .inTable(constantsNameTableJs.userBank)
-        //   .notNullable()
-        //   .onDelete('cascade');
         table.boolean('block').notNullable().defaultTo(0);
         table.timestamp('created_at').notNullable().defaultTo(db.raw('now()'));
         table.timestamp('updated_at').notNullable().defaultTo(db.raw('now()'));
@@ -126,3 +114,33 @@ export default function initSchemaTables() {
     }
   });
 }
+db.schema.hasTable(constantsNameTableJs.service).then((exists) => {
+  if (!exists) {
+    return db.schema.createTable(
+      constantsNameTableJs.service,
+      (table) => {
+        table.uuid('id').primary().defaultTo(db.raw('(UUID())'));
+        table.string('name', 250);
+        table.string('avatar', 250);
+        table.string('link_on', 500);
+        table.string('link_off', 500);
+        table.boolean('state').notNullable().defaultTo(1);
+        table
+          .uuid('userId')
+          .references('id')
+          .inTable(constantsNameTableJs.userTable)
+          .notNullable()
+          .onDelete('cascade');
+        table.string('type', 250);
+        table
+          .timestamp('created_at')
+          .notNullable()
+          .defaultTo(db.raw('now()'));
+        table
+          .timestamp('updated_at')
+          .notNullable()
+          .defaultTo(db.raw('now()'));
+      }
+    );
+  }
+});

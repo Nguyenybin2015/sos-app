@@ -58,6 +58,7 @@ export function updateUserProfile(req, res) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+
 export function updateAvatarProfile(req, res) {
   if (req) {
     userServiceJs.updateAvatarProfileService(res, req);

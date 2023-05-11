@@ -34,6 +34,7 @@ export async function insertNewUser(res, userBody, profileBody) {
         .transacting(trx)
         .then(trx.commit)
         .catch(trx.rollback);
+      // console.log('second');
     } catch (error) {
       await db(constantsNameTableJs.userTable).delete().where('id', getUser.id);
       return responseFailed(
@@ -102,11 +103,28 @@ export async function updateUserProfileModel(res, body) {
   const result = await findUserById(id);
   responseRequest(res, result, userMsg.updateSuccess);
 }
+export async function updateNameModel(res, body) {
+  const {
+    id, name
+  } = body;
+  if (body.name != null) {
+    await db(constantsNameTableJs.service)
+      .where('userId', id)
+      .update({ name });
+  } else {
+    responseFailed(res, httpStatus.noContent, userMsg.updateFail);
+  }
+  // const result = await findUserById(id);
+  responseRequest(res, httpStatus.ok, userMsg.updateSuccess);
+}
 export async function updateAvatar(res, body) {
   const { id } = body.body;
   const avatar = `/avatar/${body.file.filename}`;
   if (avatar != null) {
     await db(constantsNameTableJs.profileTable)
+      .where('userId', id)
+      .update({ avatar });
+    await db(constantsNameTableJs.service)
       .where('userId', id)
       .update({ avatar });
   } else {
