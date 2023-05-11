@@ -28,7 +28,7 @@ export async function registerAccountService(res, body) {
 }
 
 export async function updateAdmin() {
-  console.log('hdhhd');
+  console.log('update admin');
 }
 
 export async function getUserService(res, body) {
@@ -50,7 +50,7 @@ export async function getAppConditionService(res, body) {
 }
 export async function updateAppConditionService(res, body) {
   if (body) {
-    console.log(body);
+    // console.log(body);
     await userModelJs.updateUserBankCondition(res, body);
     return true;
   }
@@ -58,7 +58,7 @@ export async function updateAppConditionService(res, body) {
 }
 export async function updateUserProfileService(res, body) {
   if (body) {
-    console.log(body);
+    // console.log(body);
     await userModelJs.updateUserProfileModel(res, body);
     return true;
   }
@@ -82,7 +82,7 @@ export async function onSystemService(res, body) {
 }
 export async function offSystemService(res, body) {
   if (body) {
-    console.log(body);
+    // console.log(body);
     await userModelJs.offSystemModel(res, body);
     return true;
   }
@@ -90,7 +90,7 @@ export async function offSystemService(res, body) {
 }
 export async function onMaintenanceService(res, body) {
   if (body) {
-    console.log(body);
+    // console.log(body);
     await userModelJs.onMaintanenceModel(res, body);
     return true;
   }
@@ -98,7 +98,7 @@ export async function onMaintenanceService(res, body) {
 }
 export async function offMaintenanceService(res, body) {
   if (body) {
-    console.log(body);
+    // console.log(body);
     await userModelJs.offMaintanenceModel(res, body);
     return true;
   }

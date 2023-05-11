@@ -42,7 +42,7 @@ export async function getListBankController(req, res) {
       responseRequest(res, result, bankMsg.getAllBank);
     }
   } catch (error) {
-    console.log('error0', error);
+    console.log('err', error);
     execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
   }
 }

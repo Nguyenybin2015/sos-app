@@ -28,7 +28,7 @@ export function updateUserAdmin() {
 
 export async function getUserById(req, res) {
   const { id } = req.params;
-  console.log({ id });
+  console.log('get user');
   // res.send({ message: 'hello' });
   const result = await userServiceJs.getUserService(res, id);
   if (!res.headersSent) {
@@ -36,7 +36,7 @@ export async function getUserById(req, res) {
   }
 }
 export async function getAppCondition(req, res) {
-  console.log(req.body.id);
+  console.log('thong tin trang thai');
   const result = await userServiceJs.getAppConditionService(res, req.body.id);
   if (req.body) {
     responseRequest(res, result);
