@@ -24,13 +24,13 @@ export async function addServiceModel(body) {
     name, link_on, link_off, type
   } = body.body;
   const { id } = body.user;
-  const avatar = `/avatar/${body.file.filename}`;
+  // const avatar = `/avatar/${body.file.filename}`;
   await db(constantsNameTableJs.service).insert({
     userId: id,
     name,
     link_on,
     link_off,
-    avatar,
+    // avatar,
     type,
   });
   // await db(constantsNameTableJs.service).insert({

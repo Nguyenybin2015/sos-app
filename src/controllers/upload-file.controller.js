@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, './public/avatar');
   },
-  filename(req, file, cb, next) {
+  filename(req, file, cb) {
     // console.log(file);
     // if (!file) next();
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
