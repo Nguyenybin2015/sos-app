@@ -87,16 +87,18 @@ export async function updateUserBankCondition(res, body) {
 }
 export async function updateUserProfileModel(res, body) {
   const {
-    id, phoneNumber, name, address
-  } = body;
-  if (body.phoneNumber != null || body.address != null) {
+    phoneNumber, name, address, email
+  } = body.body;
+  const { id } = body.user;
+  // console.log(name);
+  if (phoneNumber != null || address != null) {
     await db(constantsNameTableJs.profileTable)
       .where('userId', id)
       .update({ phoneNumber, address });
-  } else if (body.name != null) {
-    const a = await db(constantsNameTableJs.userTable)
+  } if (name != null || email != null) {
+    await db(constantsNameTableJs.userTable)
       .where('id', id)
-      .update({ name });
+      .update({ name, email });
   } else {
     responseFailed(res, httpStatus.noContent, userMsg.updateFail);
   }
@@ -105,22 +107,47 @@ export async function updateUserProfileModel(res, body) {
 }
 export async function updateNameModel(res, body) {
   const {
-    id, name
-  } = body;
-  if (body.name != null) {
-    await db(constantsNameTableJs.service)
-      .where('userId', id)
-      .update({ name });
-  } else {
-    responseFailed(res, httpStatus.noContent, userMsg.updateFail);
+    name, type
+  } = body.body;
+  const { id } = body.user;
+  const result = await findUserById(id);
+  const check = await db.select('*').from(constantsNameTableJs.service).where('type', type).andWhere('userId', id);
+  if (Object.keys(check).length === 0) { return responseFailed(
+    res,
+    httpStatus.serverInterval,
+    'Type invalid or service not found'
+  ); }
+  try {
+    if (body.name != null) {
+      await db(constantsNameTableJs.service)
+        .where('type', type)
+        .update({ name });
+    } else {
+      responseFailed(res, httpStatus.noContent, userMsg.updateFail);
+    }
+    // const result = await findUserById(id);
+    responseRequest(res, httpStatus.ok, userMsg.updateSuccess);
+  } catch (error) {
+    return responseFailed(
+      res,
+      httpStatus.serverInterval,
+      userMsg.createProfileError
+    );
   }
-  // const result = await findUserById(id);
-  responseRequest(res, httpStatus.ok, userMsg.updateSuccess);
+  // if (body.name != null) {
+  //   await db(constantsNameTableJs.service)
+  //     .where('userId', id).andWhere('type', type)
+  //     .update({ name });
+  // } else {
+  //   responseFailed(res, httpStatus.noContent, userMsg.updateFail);
+  // }
+  // // const result = await findUserById(id);
+  // responseRequest(res, httpStatus.ok, userMsg.updateSuccess);
 }
 export async function updateAvatar(res, body) {
-  const { id } = body.body;
+  const { id } = body.user;
   const avatar = `/avatar/${body.file.filename}`;
-  if (avatar != null) {
+  if (avatar) {
     await db(constantsNameTableJs.profileTable)
       .where('userId', id)
       .update({ avatar });

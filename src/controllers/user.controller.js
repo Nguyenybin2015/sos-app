@@ -27,7 +27,7 @@ export function updateUserAdmin() {
 }
 
 export async function getUserById(req, res) {
-  const { id } = req.params;
+  const { id } = req.user;
   console.log('get user');
   // res.send({ message: 'hello' });
   const result = await userServiceJs.getUserService(res, id);
@@ -52,14 +52,16 @@ export function updateAppCondition(req, res) {
   }
 }
 export function updateUserProfile(req, res) {
-  if (req.body) {
-    userServiceJs.updateUserProfileService(res, req.body);
+  if (req) {
+    userServiceJs.updateUserProfileService(res, req);
   } else {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
 
 export function updateAvatarProfile(req, res) {
+  console.log('dhdh', req.file);
+  console.log('hdhdhdd', req.files);
   if (req) {
     userServiceJs.updateAvatarProfileService(res, req);
   } else {

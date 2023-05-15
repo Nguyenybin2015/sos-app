@@ -6,6 +6,7 @@ import isAuth from '../middlewares/authen-token.js';
 import isAdmin from '../middlewares/check-role.js';
 import checkOTP from '../middlewares/check-otp.js';
 import upload from '../controllers/upload-file.controller.js';
+import sendEmail from '../services/send-mail.service.js';
 
 const userRoutes = Router();
 
@@ -17,7 +18,7 @@ userRoutes.put('/update-user-profile', [isAuth], userControllerJs.updateUserProf
 // userRoutes.put('/off-maintenance', [isAuth, checkOTP], userControllerJs.offMaintenanceController);
 // userRoutes.put('/on-system', [isAuth, checkOTP], userControllerJs.onSystemController);
 // userRoutes.put('/off-system', [isAuth, checkOTP], userControllerJs.offSystemController);
-userRoutes.get('/:id', userControllerJs.getUserById);
+userRoutes.get('/profile', [isAuth], userControllerJs.getUserById);
 userRoutes.post(
   '/register-acount',
   [...validatesBodyRequestJs.registerValidation, validateResult],

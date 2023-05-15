@@ -5,6 +5,7 @@ import { authMsg, serverMsg } from '../constants/constants.message-response.js';
 import { loginService, verifyOtpService } from '../services/auth.service.js';
 import responseRequest from '../utils/utils.response.js';
 import execptionErrorCommon from '../exceptions/exception.errror-common.js';
+import sendEmail from '../services/send-mail.service.js';
 
 dotenv.config();
 
@@ -32,12 +33,9 @@ export function verifyOtp(req, res) {
   }
 }
 export function getOtp(req, res) {
-  const token = Speakeasy.totp({
-    secret: process.env.SECRET_OTP_TOKEN,
-    encoding: 'base32',
-    digits: 6,
-    step: 60,
-    window: 10,
-  });
-  return res.send({ otpCode: token });
+  try {
+    sendEmail(req, res);
+  } catch (error) {
+    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
+  }
 }

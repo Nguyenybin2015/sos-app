@@ -8,21 +8,32 @@ import responseRequest from '../utils/utils.response.js';
 
 export async function addService(res, body) {
   try {
-    const check = await serviceModelJs.getAll(body.id);
-    if (check.length) {
-      return responseRequest(res, httpStatus.conflict, 'This service is already');
-    } else {
-      const result = await serviceModelJs.addServiceModel(body);
-      return responseRequest(res, result, 'Success');
-    }
+    // // console.log(body.body.id);
+    // const check = await serviceModelJs.getAll(body.body.id);
+    // if (check.length) {
+    //   return responseRequest(res, httpStatus.conflict, 'This service is already');
+    // } else {
+    const result = await serviceModelJs.addServiceModel(body);
+    return responseRequest(res, result, 'Success');
+    // }
   } catch (error) {
+    console.log(error);
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
 export async function getAllService(res, id) {
   try {
-    console.log(id);
+    // console.log(id);
     const result = await serviceModelJs.getAll(id);
+    return responseRequest(res, result, 'Success');
+  } catch (error) {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+export async function getServiceByType(res, body) {
+  try {
+    // console.log(id);
+    const result = await serviceModelJs.getService(body);
     return responseRequest(res, result, 'Success');
   } catch (error) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
@@ -46,8 +57,8 @@ export async function addLinkOffService(res, body) {
 }
 export async function updateStateService(res, body) {
   try {
-    await serviceModelJs.updateState(body);
-    return responseRequest(res, httpStatus.ok, 'Success');
+    const result = await serviceModelJs.updateState(body);
+    return responseRequest(res, result, 'Success');
   } catch (error) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }

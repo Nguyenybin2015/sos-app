@@ -5,22 +5,30 @@ import { serverMsg } from '../constants/constants.message-response.js';
 import * as serviceUserServiceJs from '../services/serviceUser.service.js';
 
 export function updateName(req, res) {
-  if (req.body) {
-    userServiceJs.updateNameService(res, req.body);
+  if (req) {
+    userServiceJs.updateNameService(res, req);
   } else {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
 export function add(req, res) {
-  if (req.body) {
-    serviceUserServiceJs.addService(res, req.body);
+  // console.log(req);
+  if (req) {
+    serviceUserServiceJs.addService(res, req);
   } else {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
 export function getAll(req, res) {
-  if (req.body.id) {
-    serviceUserServiceJs.getAllService(res, req.body.id);
+  if (req.user.id) {
+    serviceUserServiceJs.getAllService(res, req.user.id);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
+export function getService(req, res) {
+  if (req.user) {
+    serviceUserServiceJs.getServiceByType(res, req);
   } else {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
