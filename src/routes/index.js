@@ -10,11 +10,11 @@ import services from './service.route.js';
 const indexRouters = Router();
 
 indexRouters.use('/auth', authRoutes);
-// indexRouters.use('/bank', bankRoutes);
-// indexRouters.use('/crypto', cryptoRoutes);
+indexRouters.use('/bank', bankRoutes);
+indexRouters.use('/crypto', cryptoRoutes);
 indexRouters.use('/user', userRoutes);
 indexRouters.use('/services', services);
-// indexRouters.use('/userbank', userBankRoutes);
-// indexRouters.use('/p2p', p2pRoutes);
+indexRouters.use('/userbank', userBankRoutes);
+indexRouters.use('/p2p', p2pRoutes);
 
 export default indexRouters;
