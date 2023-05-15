@@ -3,3 +3,5 @@
 .env
 
 /coverage
+
+/public/avatar

@@ -60,8 +60,6 @@ export function updateUserProfile(req, res) {
 }
 
 export function updateAvatarProfile(req, res) {
-  console.log('dhdh', req.file);
-  console.log('hdhdhdd', req.files);
   if (req) {
     userServiceJs.updateAvatarProfileService(res, req);
   } else {
