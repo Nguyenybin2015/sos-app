@@ -11,6 +11,6 @@ services.get('/get-all', [isAuth], serviceControllerJs.getAll);
 services.get('/get-services', [isAuth], serviceControllerJs.getService);
 services.put('/update-avatar', [isAuth, upload.single('image_avatar')], serviceControllerJs.updateAvatar);
 services.put('/update-state', [isAuth, checkOTP], serviceControllerJs.updateState);
-services.put('/update-name', [isAuth], serviceControllerJs.updateName);
+services.put('/update-service', [isAuth], serviceControllerJs.updateName);
 
 export default services;
