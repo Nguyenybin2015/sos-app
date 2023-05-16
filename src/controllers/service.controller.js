@@ -3,6 +3,7 @@ import responseFailed from '../utils/utils.response-failed.js';
 import { httpStatus } from '../constants/constants.http-status.code.js';
 import { serverMsg } from '../constants/constants.message-response.js';
 import * as serviceUserServiceJs from '../services/serviceUser.service.js';
+import upload from './upload-file.controller.js';
 
 export function updateName(req, res) {
   if (req) {
@@ -12,7 +13,6 @@ export function updateName(req, res) {
   }
 }
 export function add(req, res) {
-  // console.log(req);
   if (req) {
     serviceUserServiceJs.addService(res, req);
   } else {

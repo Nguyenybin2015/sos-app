@@ -24,39 +24,26 @@ export async function addServiceModel(body) {
     name, link_on, link_off, type
   } = body.body;
   const { id } = body.user;
-  // const avatar = `/avatar/${body.file.filename}`;
-  await db(constantsNameTableJs.service).insert({
-    userId: id,
-    name,
-    link_on,
-    link_off,
-    // avatar,
-    type,
-  });
-  // await db(constantsNameTableJs.service).insert({
-  //   userId: id,
-  //   name,
-  //   link_on,
-  //   link_off,
-  //   avatar,
-  //   type: 'withdrawal',
-  // });
-  // await db(constantsNameTableJs.service).insert({
-  //   userId: id,
-  //   name,
-  //   link_on,
-  //   link_off,
-  //   avatar,
-  //   type: 'maintanence',
-  // });
-  // await db(constantsNameTableJs.service).insert({
-  //   userId: id,
-  //   name,
-  //   link_on,
-  //   link_off,
-  //   avatar,
-  //   type: 'system',
-  // });
+  if (!body.file) {
+    await db(constantsNameTableJs.service).insert({
+      userId: id,
+      name,
+      link_on,
+      link_off,
+      type,
+    });
+  }
+  else {
+    const avatar = `/avatar/${body.file.filename}`;
+    await db(constantsNameTableJs.service).insert({
+      userId: id,
+      name,
+      link_on,
+      link_off,
+      avatar,
+      type,
+    });
+  }
   const result = await getAll(id);
   return result;
 }

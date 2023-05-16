@@ -8,11 +8,6 @@ import responseRequest from '../utils/utils.response.js';
 
 export async function addService(res, body) {
   try {
-    // // console.log(body.body.id);
-    // const check = await serviceModelJs.getAll(body.body.id);
-    // if (check.length) {
-    //   return responseRequest(res, httpStatus.conflict, 'This service is already');
-    // } else {
     const result = await serviceModelJs.addServiceModel(body);
     return responseRequest(res, result, 'Success');
     // }
