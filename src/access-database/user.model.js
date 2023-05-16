@@ -95,7 +95,8 @@ export async function updateUserProfileModel(res, body) {
     await db(constantsNameTableJs.profileTable)
       .where('userId', id)
       .update({ phoneNumber, address });
-  } if (name != null || email != null) {
+  }
+  if (name != null || email != null) {
     await db(constantsNameTableJs.userTable)
       .where('id', id)
       .update({ name, email });
@@ -107,16 +108,23 @@ export async function updateUserProfileModel(res, body) {
 }
 export async function updateNameModel(res, body) {
   const {
-    name, type
+    name, link_on, link_off, type
   } = body.body;
   const { id } = body.user;
   const result = await findUserById(id);
-  const check = await db.select('*').from(constantsNameTableJs.service).where('type', type).andWhere('userId', id);
-  if (Object.keys(check).length === 0) { return responseFailed(
-    res,
-    httpStatus.serverInterval,
-    'Type invalid or service not found'
-  ); }
+  const check = await db
+    .select('*')
+    .from(constantsNameTableJs.service)
+    .where('type', type)
+    .andWhere('userId', id)
+    .update({ name, link_on, link_off });
+  if (Object.keys(check).length === 0) {
+    return responseFailed(
+      res,
+      httpStatus.serverInterval,
+      'Type invalid or service not found'
+    );
+  }
   try {
     if (body.name != null) {
       await db(constantsNameTableJs.service)
@@ -229,12 +237,9 @@ export async function deleteUser(body) {
       'users.id',
       '=',
       'profile_user.userId'
-    ).innerJoin(
-      constantsNameTableJs.service,
-      'users.id',
-      '=',
-      'service.userId'
-    ).where('users.id', id)
+    )
+    .innerJoin(constantsNameTableJs.service, 'users.id', '=', 'service.userId')
+    .where('users.id', id)
     .del();
   return true;
 }
