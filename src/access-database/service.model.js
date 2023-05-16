@@ -81,7 +81,7 @@ export async function stateOn(body) {
     .select('id', 'userId', 'type', 'link_on')
     .from(constantsNameTableJs.service)
     .where('id', idService);
-  return result;
+  return result[0];
 }
 export async function stateOff(body) {
   const { idService } = body;
@@ -92,7 +92,7 @@ export async function stateOff(body) {
     .select('id', 'userId', 'type', 'link_off')
     .from(constantsNameTableJs.service)
     .where('id', idService);
-  return result;
+  return result[0];
 }
 export async function updateState(body) {
   const { idService } = body;
