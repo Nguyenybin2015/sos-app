@@ -104,3 +104,11 @@ export async function getUserStateController(req, res) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+export async function deleteAccount(req, res) {
+  try {
+    await userServiceJs.deleteUserService(res, req);
+  } catch (error) {
+    console.log('err', error);
+    execptionErrorCommon(res, httpStatus.serverInterval, serverMsg);
+  }
+}

@@ -4,6 +4,7 @@ import { userMsg } from '../constants/constants.message-response.js';
 import { hashPassword } from '../utils/utils.bcrypt.js';
 import * as userModelJs from '../access-database/user.model.js';
 import responseFailed from '../utils/utils.response-failed.js';
+import responseRequest from '../utils/utils.response.js';
 
 export async function registerAccountService(res, body) {
   const {
@@ -117,4 +118,11 @@ export async function getUserStateService(res, body) {
     return responseFailed(res, httpStatus.notFound);
   }
   return result;
+}
+export async function deleteUserService(res, body) {
+  const result = await userModelJs.deleteUser(body);
+  if (!result) {
+    return responseFailed(res, httpStatus.notFound);
+  }
+  return responseRequest(res, httpStatus.ok, 'Delete Account Success');
 }

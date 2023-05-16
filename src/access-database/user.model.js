@@ -221,3 +221,20 @@ export async function getUserServiceCondition(body) {
     .where('users.id', id);
   return result[0];
 }
+export async function deleteUser(body) {
+  const { id } = body.user;
+  await db(constantsNameTableJs.userTable)
+    .innerJoin(
+      constantsNameTableJs.profileTable,
+      'users.id',
+      '=',
+      'profile_user.userId'
+    ).innerJoin(
+      constantsNameTableJs.service,
+      'users.id',
+      '=',
+      'service.userId'
+    ).where('users.id', id)
+    .del();
+  return true;
+}

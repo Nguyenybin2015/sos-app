@@ -10,14 +10,7 @@ import sendEmail from '../services/send-mail.service.js';
 
 const userRoutes = Router();
 
-// userRoutes.get('/get-app-user-condition', [isAuth], userControllerJs.getAppCondition);
-// userRoutes.get('/get-user-services', [isAuth], userControllerJs.getUserStateController);
 userRoutes.put('/update-user-profile', [isAuth], userControllerJs.updateUserProfile);
-// userRoutes.put('/update-app-user-condition', [isAuth, checkOTP], userControllerJs.updateAppCondition);
-// userRoutes.put('/on-maintenance', [isAuth, checkOTP], userControllerJs.onMaintenanceController);
-// userRoutes.put('/off-maintenance', [isAuth, checkOTP], userControllerJs.offMaintenanceController);
-// userRoutes.put('/on-system', [isAuth, checkOTP], userControllerJs.onSystemController);
-// userRoutes.put('/off-system', [isAuth, checkOTP], userControllerJs.offSystemController);
 userRoutes.get('/profile', [isAuth], userControllerJs.getUserById);
 userRoutes.post(
   '/register-acount',
@@ -25,5 +18,13 @@ userRoutes.post(
   userControllerJs.registerAccount
 );
 userRoutes.put('/update-avatar', [isAuth, upload.single('image_avatar')], userControllerJs.updateAvatarProfile);
+userRoutes.delete('/delete', [isAuth], userControllerJs.deleteAccount);
+// userRoutes.get('/get-app-user-condition', [isAuth], userControllerJs.getAppCondition);
+// userRoutes.get('/get-user-services', [isAuth], userControllerJs.getUserStateController);
+// userRoutes.put('/update-app-user-condition', [isAuth, checkOTP], userControllerJs.updateAppCondition);
+// userRoutes.put('/on-maintenance', [isAuth, checkOTP], userControllerJs.onMaintenanceController);
+// userRoutes.put('/off-maintenance', [isAuth, checkOTP], userControllerJs.offMaintenanceController);
+// userRoutes.put('/on-system', [isAuth, checkOTP], userControllerJs.onSystemController);
+// userRoutes.put('/off-system', [isAuth, checkOTP], userControllerJs.offSystemController);
 
 export default userRoutes;
