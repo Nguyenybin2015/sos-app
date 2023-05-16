@@ -312,7 +312,7 @@ const output = `<!DOCTYPE html>
 </body>
 
 </html>`;
-export default async function sendEmail(req, res, next) {
+export default async function sendEmail(req, res) {
   const userEmail = await findUserById(req.user.id);
   const mailOptions = {
     from: 'nyb866@gmail.com',

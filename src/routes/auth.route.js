@@ -13,6 +13,6 @@ authRoutes.put(
   [...verifyOtpValidation, validateResult],
   verifyOtp
 );
-authRoutes.get('/get-otp', [isAuth], sendEmail);
+authRoutes.get('/get-otp', sendEmail);
 
 export default authRoutes;

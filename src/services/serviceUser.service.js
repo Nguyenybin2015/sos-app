@@ -66,3 +66,11 @@ export async function updateAvatarService(res, body) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+export async function deleteService(res, body) {
+  try {
+    const result = await serviceModelJs.deleteServiceModal(body);
+    return responseRequest(res, result, 'Success');
+  } catch (error) {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}

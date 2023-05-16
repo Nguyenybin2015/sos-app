@@ -111,14 +111,9 @@ export async function updateState(body) {
   const stateOnRedult = await stateOn(body);
   return stateOnRedult;
 }
-
-// export async function getDeposit() {
-
-// }
-// export async function getWithdrawl() {}
-// export async function getMaintanence() {
-
-// }
-// export async function getSystem() {
-
-// }
+export async function deleteServiceModal(body) {
+  const { idService } = body;
+  const results = await db(constantsNameTableJs.service)
+    .where('id', idService).del();
+  return results;
+}

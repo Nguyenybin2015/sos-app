@@ -62,3 +62,10 @@ export function updateAvatar(req, res) {
     return responseFailed(res, httpStatus.serverInterval, serverMsg);
   }
 }
+export function deleteController(req, res) {
+  if (req.user) {
+    serviceUserServiceJs.deleteService(res, req);
+  } else {
+    return responseFailed(res, httpStatus.serverInterval, serverMsg);
+  }
+}
