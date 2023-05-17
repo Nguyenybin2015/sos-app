@@ -45,7 +45,7 @@ export async function addServiceModel(body) {
     });
   }
   const result = await getAll(id);
-  return result;
+  return result[0];
 }
 
 export async function updateLinkOnModel(body) {
@@ -112,7 +112,7 @@ export async function updateState(body) {
   return stateOnRedult;
 }
 export async function deleteServiceModal(body) {
-  const { idService } = body;
+  const { idService } = body.body;
   const results = await db(constantsNameTableJs.service)
     .where('id', idService).del();
   return results;

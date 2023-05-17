@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable camelcase */
 import { db } from '../configs/configs.db.js';
 import { httpStatus } from '../constants/constants.http-status.code.js';
@@ -112,19 +113,32 @@ export async function updateNameModel(res, body) {
   } = body.body;
   const { id } = body.user;
   const result = await findUserById(id);
-  const check = await db
-    .select('*')
-    .from(constantsNameTableJs.service)
-    .where('type', type)
-    .andWhere('userId', id)
-    .update({ name, link_on, link_off });
-  if (Object.keys(check).length === 0) {
-    return responseFailed(
-      res,
-      httpStatus.serverInterval,
-      'Type invalid or service not found'
-    );
+  if (!body.file) {
+    const check = await db
+      .select('*')
+      .from(constantsNameTableJs.service)
+      .where('type', type)
+      .andWhere('userId', id)
+      .update({ name, link_on, link_off });
   }
+  else {
+    const avatar = `/avatar/${body.file.filename}`;
+    const check = await db
+      .select('*')
+      .from(constantsNameTableJs.service)
+      .where('type', type)
+      .andWhere('userId', id)
+      .update({
+        name, link_on, link_off, avatar
+      });
+  }
+  // if (Object.keys(check).length === 0) {
+  //   return responseFailed(
+  //     res,
+  //     httpStatus.serverInterval,
+  //     'Type invalid or service not found'
+  //   );
+  // }
   try {
     if (body.name != null) {
       await db(constantsNameTableJs.service)
