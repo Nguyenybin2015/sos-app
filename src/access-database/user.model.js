@@ -111,7 +111,7 @@ export async function updateNameModel(res, body) {
   const {
     idService, name, link_on, link_off
   } = body.body;
-  const result = await findUserById(id);
+  // const result = await findUserById(id);
   if (!body.file) {
     const check = await db
       .select('*')
@@ -129,39 +129,6 @@ export async function updateNameModel(res, body) {
         name, link_on, link_off, avatar
       });
   }
-  // if (Object.keys(check).length === 0) {
-  //   return responseFailed(
-  //     res,
-  //     httpStatus.serverInterval,
-  //     'Type invalid or service not found'
-  //   );
-  // }
-  try {
-    if (body.name != null) {
-      await db(constantsNameTableJs.service)
-        .where('type', type)
-        .update({ name });
-    } else {
-      responseFailed(res, httpStatus.noContent, userMsg.updateFail);
-    }
-    // const result = await findUserById(id);
-    responseRequest(res, httpStatus.ok, userMsg.updateSuccess);
-  } catch (error) {
-    return responseFailed(
-      res,
-      httpStatus.serverInterval,
-      userMsg.createProfileError
-    );
-  }
-  // if (body.name != null) {
-  //   await db(constantsNameTableJs.service)
-  //     .where('userId', id).andWhere('type', type)
-  //     .update({ name });
-  // } else {
-  //   responseFailed(res, httpStatus.noContent, userMsg.updateFail);
-  // }
-  // // const result = await findUserById(id);
-  // responseRequest(res, httpStatus.ok, userMsg.updateSuccess);
 }
 export async function updateAvatar(res, body) {
   const { id } = body.user;

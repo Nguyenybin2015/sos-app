@@ -66,6 +66,7 @@ export async function updateUserProfileService(res, body) {
   return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
 }
 export async function updateNameService(res, body) {
+  // console.log(body);
   if (body) {
     await userModelJs.updateNameModel(res, body);
     return responseRequest(res, httpStatus.ok, 'Success');
