@@ -109,16 +109,14 @@ export async function updateUserProfileModel(res, body) {
 }
 export async function updateNameModel(res, body) {
   const {
-    name, link_on, link_off, type
+    idService, name, link_on, link_off
   } = body.body;
-  const { id } = body.user;
   const result = await findUserById(id);
   if (!body.file) {
     const check = await db
       .select('*')
       .from(constantsNameTableJs.service)
-      .where('type', type)
-      .andWhere('userId', id)
+      .where('id', idService)
       .update({ name, link_on, link_off });
   }
   else {
@@ -126,8 +124,7 @@ export async function updateNameModel(res, body) {
     const check = await db
       .select('*')
       .from(constantsNameTableJs.service)
-      .where('type', type)
-      .andWhere('userId', id)
+      .where('id', idService)
       .update({
         name, link_on, link_off, avatar
       });
