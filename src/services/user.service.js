@@ -74,7 +74,7 @@ export async function updateNameService(res, body) {
   return responseFailed(res, httpStatus.notFound, userMsg.updateFail);
 }
 export async function updateAvatarProfileService(res, body) {
-  console.log('body service', body);
+  // console.log('body service', body);
   if (body) {
     await userModelJs.updateAvatar(res, body);
     return true;
